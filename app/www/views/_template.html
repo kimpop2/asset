@@ -1,0 +1,234 @@
+﻿
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="sidebar.nav.asset.ASSETMASTER">이동대여반납</h1>
+      <span class="mainDescription">이동대여반납 정보에 대한 등록, 수정, 삭제 및 사용여부를 관리합니다</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="AssetMoveCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1" tool-dismiss="tool-dismiss"></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> New</a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> Edit</a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> Delete</a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i></a>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="search..."
+                                     class="asset_move_form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="Filter Search" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i> Search
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="asset_move_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">자산마스타3</h3>
+  </div>
+  <div class="modal-body">
+<!-- start: FORM VALIDATION -->
+<div class="container-fluid container-fullw bg-white">
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="over-title margin-bottom-15">AngularJS directives for <span class="text-bold">form validation</span></h5>
+      <p>
+        AngularJS has many directives to run form validation. Some of these (like required, pattern, etc.) repeat the behaviour of the new HTML5 attributes. The advantage of using AngularJS directives instead of classic HTML5 attributes, is that AngularJS way allows to mantain the two way data binding between model and view.
+      </p>
+      <!-- /// controller:  'AsideCtrl' /// -->
+      <div>
+        <form name="Form" id="form1" novalidate >
+          <div class="row">
+            <div class="col-md-6">
+              <fieldset>
+                <legend>
+                  Column1
+                </legend>
+                <!-- input -->
+                <div class="form-group" ng-class="{'has-error':Form.firstName.$dirty && Form.firstName.$invalid, 'has-success':Form.firstName.$valid}">
+                  <label class="control-label">
+                    First Name <span class="symbol required"></span>
+                  </label>
+                  <input type="text" placeholder="Enter your First Name" class="form-control" name="firstName" ng-model="myform.firstName" required />
+                  <span class="error text-small block" ng-if="Form.firstName.$dirty && Form.firstName.$invalid">First Name is required</span>
+                  <span class="success text-small" ng-if="Form.firstName.$valid">Thank You!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.minMaxText.$dirty && Form.minMaxText.$invalid, 'has-success':Form.minMaxText.$valid}">
+                  <label class="control-label">
+                    Text with a minimum of 2 and a maximum of 6 characters <span class="symbol required"></span>
+                  </label>
+                  <input type="text" name="minMaxText" placeholder="Enter text" class="form-control" ng-model="myform.minMaxText" ng-minlength="2" ng-maxlength="6" required />
+                  <span class="error text-small block" ng-if="Form.minMaxText.$error.maxlength">Too long!</span>
+                  <span class="error text-small block" ng-if="Form.minMaxText.$error.minlength">Too short!</span>
+                </div>
+                
+                <div class="form-group" ng-class="{'has-error':Form.minMaxNumber.$dirty && Form.minMaxNumber.$invalid, 'has-success':Form.minMaxNumber.$valid}">
+                  <label class="control-label">
+                    Number between 10 and 100 <span class="symbol required"></span>
+                  </label>
+                  <input type="number" name="minMaxNumber" placeholder="Enter number" class="form-control" ng-model="myform.minMaxNumber" min="10" max="100" required />
+                  <span class="error text-small block" ng-if="Form.minMaxNumber.$error.max">Number must not be higher than 100!</span>
+                  <span class="error text-small block" ng-if="Form.minMaxNumber.$error.min">Number must be higher than 10!</span>
+                  <span class="error text-small block" ng-if="Form.minMaxNumber.$error.number">Not valid number!</span>
+                </div>
+
+                <!-- radio -->
+                <div class="form-group" ng-class="{'has-error':Form.field.$dirty && Form.field.$invalid, 'has-success':Form.field.$valid}">
+                  <label class="control-label block">
+                    Gender <span class="symbol required"></span>
+                  </label>
+                  <div class="clip-radio radio-primary">
+                    <input type="radio" id="field-Y" name="field" value="Y" ng-model="myform.field" required />
+                    <label for="field-Y">
+                      fieldName-Y
+                    </label>
+                    <input type="radio" id="field-N" name="field" value="N" ng-model="myform.field" required />
+                    <label for="field-N">
+                      fieldName-N
+                    </label>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.field.$dirty && Form.field.$error.required">Gender is required.</span>
+                  <span class="success text-small block" ng-if="Form.field.$valid && myform.field == 'Y'">Thank You, Mr. {{form.lastName}}!</span>
+                  <span class="success text-small block" ng-if="Form.field.$valid && myform.field == 'N'">Thank You, Mrs. {{form.lastName}}!</span>
+                </div>
+                
+                <!-- checkbox -->
+                <div class="form-group" ng-class="{'has-error': Form.checkbox1.$dirty && Form.checkbox1.$invalid, 'has-success':Form.checkbox1.$valid}">
+                  <label class="control-label">
+                    Agreement <span class="symbol required"></span>
+                  </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" name="checkbox1" id="checkbox1" mg-model="myform.checkbox1" required />
+                    <label for="checkbox1">
+                      Checkbox 1
+                    </label>
+                  </div>
+                  <span class="error text-small block" ng-if="!myform.checkbox1">You must Agreement!</span>
+                </div>
+
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <fieldset>
+                <legend>
+                  Column2
+                </legend>
+                
+                <!-- select -->
+                <div class="form-group">
+                  <label>
+                    With a clear button
+                  </label>
+                  <div class="input-group">
+                    <ui-select ng-model="person.selected" theme="bootstrap">
+                      <ui-select-match placeholder="Select in the list...">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="item in people | filter: $select.search">
+                        <span ng-bind-html="item.name | highlight: $select.search"></span>
+                        <small ng-bind-html="item.email | highlight: $select.search"></small>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="person.selected = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button> </span>
+                  </div>
+                </div>
+
+                <!-- date -->
+                
+                <div class="form-group" ng-class="{'has-error':Form.dt.$dirty && Form.dt.$invalid, 'has-success':Form.dt.$valid}">
+                  <label for="form-field-select-1">
+                    Date <span class="symbol required"></span>
+                  </label>
+                  <p class="input-group" >
+                    <input type="text" name="dt" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="myform.dt" is-open="opened" min-date="minDate" max-date="maxDate" 
+                            datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" required />
+                    <span class="input-group-btn"> 
+                      <button type="button" class="btn btn-default" ng-click="open($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button> </span>
+                  </p>
+                  <span class="error text-small block" ng-if="Form.dt.$dirty && Form.dt.$error.required">Date is required.</span>
+                </div>
+                <!-- textarea -->
+                <div class="form-group">
+                  <div class="note-editor">
+                    <textarea maxlength="100" class="form-control limited" ng-model="myform.textarea"></textarea>
+                  </div>
+                </div>
+            
+              </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)">
+                  Reset
+                </button>
+                <button class="btn btn-default">
+                  checkValid = {{ Form.$valid }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <pre class="margin-top-20">{{ myform | json }}</pre>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: FORM VALIDATION -->
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()"><i class="ti-close"></i> Close</button>
+  </div>
+</script>
+

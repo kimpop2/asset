@@ -1,0 +1,223 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 사원마스타
+ * File          : employee.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="sidebar.nav.asset.ASSETMASTER">사원마스타</h1>
+      <span class="mainDescription">사원마스타 정보에 대한 등록, 수정, 삭제 및 사용여부를 관리합니다</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="EmployeeCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1" tool-dismiss="tool-dismiss"></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> New</a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> Edit</a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> Delete</a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i></a>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="search..."
+                                     class="employee_form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="Filter Search" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i> Search
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="employee_aside.html">
+<!-- start: FORM VALIDATION -->
+<div class="container-fluid container-fullw bg-white" style="margin-left: 2px">
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="over-title margin-bottom-15"> <span class="text-bold">사원마스타</span></h5>
+      <p >
+        (도움말) 사원마스타 ....
+      </p>
+      <!-- /// controller:  'AsideCtrl' /// -->
+      <div>
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.emp_no" ng-if="myform.txn_type === 'exec_mudt'"  />
+          <div class="row">
+            <fieldset>
+              <legend> 사원마스타</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.emp_no.$dirty && Form.emp_no.$invalid, 'has-success':Form.emp_no.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"> 사번 <span class="symbol required"></span></label>
+                  <input type="text" placeholder="사번" class="form-control" name="emp_no" ng-model="myform.emp_no" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.emp_no.$dirty && Form.emp_no.$error.required">사번 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_no.$error.minlength">사번 란을 1자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_no.$error.maxlength">사번 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.emp_name.$dirty && Form.emp_name.$invalid, 'has-success':Form.emp_name.$valid}" >
+                  <label class="control-label"> 이름 <span class="symbol required"></span></label>
+                  <input type="text" placeholder="이름" class="form-control" name="emp_name" ng-model="myform.emp_name" ng-minlength="1" ng-maxlength="60" required />
+                  <span class="error text-small block" ng-if="Form.emp_name.$dirty && Form.emp_name.$error.required">이름 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_name.$error.minlength">이름 란을 1자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_name.$error.maxlength">이름 란을 60자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.emp_pass.$dirty && Form.emp_pass.$invalid, 'has-success':Form.emp_pass.$valid}" >
+                  <label class="control-label"> 비밀번호 <span class="symbol required"></span></label>
+                  <input type="text" placeholder="비밀번호" class="form-control" name="emp_pass" ng-model="myform.emp_pass" ng-minlength="1" ng-maxlength="10" required />
+                  <span class="error text-small block" ng-if="Form.emp_pass.$dirty && Form.emp_pass.$error.required">비밀번호 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_pass.$error.minlength">비밀번호 란을 1자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.emp_pass.$error.maxlength">비밀번호 란을 10자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.role.$dirty && Form.role.$invalid, 'has-success':Form.role.$valid}" >
+                  <label class="control-label"> 역할 <span class="symbol required"></span></label>
+                  <input type="text" placeholder="역할" class="form-control" name="role" ng-model="myform.role" ng-minlength="1" ng-maxlength="10" required />
+                  <span class="error text-small block" ng-if="Form.role.$dirty && Form.role.$error.required">역할 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.role.$error.minlength">역할 란을 1자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.role.$error.maxlength">역할 란을 10자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.class_nm.$dirty && Form.class_nm.$invalid, 'has-success':Form.class_nm.$valid}" >
+                  <label class="control-label"> 근무구분 <span class="symbol "></span></label>
+                  <input type="text" placeholder="근무구분" class="form-control" name="class_nm" ng-model="myform.class_nm" ng-minlength="0" ng-maxlength="30"  />
+                  <span class="error text-small block" ng-if="Form.class_nm.$dirty && Form.class_nm.$error.required">근무구분 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.class_nm.$error.minlength">근무구분 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.class_nm.$error.maxlength">근무구분 란을 30자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.dept_cd.$dirty && Form.dept_cd.$invalid, 'has-success':Form.dept_cd.$valid}" >
+                  <label class="control-label"> 부서코드 <span class="symbol "></span></label>
+                  <input type="text" placeholder="부서코드" class="form-control" name="dept_cd" ng-model="myform.dept_cd" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.dept_cd.$dirty && Form.dept_cd.$error.required">부서코드 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.dept_cd.$error.minlength">부서코드 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.dept_cd.$error.maxlength">부서코드 란을 10자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.dept_nm.$dirty && Form.dept_nm.$invalid, 'has-success':Form.dept_nm.$valid}" >
+                  <label class="control-label"> 부서명 <span class="symbol "></span></label>
+                  <input type="text" placeholder="부서명" class="form-control" name="dept_nm" ng-model="myform.dept_nm" ng-minlength="0" ng-maxlength="50"  />
+                  <span class="error text-small block" ng-if="Form.dept_nm.$dirty && Form.dept_nm.$error.required">부서명 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.dept_nm.$error.minlength">부서명 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.dept_nm.$error.maxlength">부서명 란을 50자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.enter_dt.$dirty && Form.enter_dt.$invalid, 'has-success':Form.enter_dt.$valid}" >
+                  <label class="control-label"> 입사일 <span class="symbol "></span></label>
+                  <input type="text" placeholder="입사일" class="form-control" name="enter_dt" ng-model="myform.enter_dt" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.enter_dt.$dirty && Form.enter_dt.$error.required">입사일 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.enter_dt.$error.minlength">입사일 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.enter_dt.$error.maxlength">입사일 란을 10자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.term_yr.$dirty && Form.term_yr.$invalid, 'has-success':Form.term_yr.$valid}" >
+                  <label class="control-label"> 근속년 <span class="symbol "></span></label>
+                  <input type="number" placeholder="근속년" class="form-control" name="term_yr" ng-model="myform.term_yr" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.term_yr.$dirty && Form.term_yr.$error.required">근속년 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.term_yr.$error.minlength">근속년 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.term_yr.$error.maxlength">근속년 란을 10자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.phone.$dirty && Form.phone.$invalid, 'has-success':Form.phone.$valid}" >
+                  <label class="control-label"> 전화번호 <span class="symbol "></span></label>
+                  <input type="text" placeholder="전화번호" class="form-control" name="phone" ng-model="myform.phone" ng-minlength="0" ng-maxlength="15"  />
+                  <span class="error text-small block" ng-if="Form.phone.$dirty && Form.phone.$error.required">전화번호 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.phone.$error.minlength">전화번호 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.phone.$error.maxlength">전화번호 란을 15자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.admin_salary.$dirty && Form.admin_salary.$invalid, 'has-success':Form.admin_salary.$valid}" >
+                  <label class="control-label"> 급여담당 <span class="symbol "></span></label>
+                  <input type="text" placeholder="급여담당" class="form-control" name="admin_salary" ng-model="myform.admin_salary" ng-minlength="0" ng-maxlength="1"  />
+                  <span class="error text-small block" ng-if="Form.admin_salary.$dirty && Form.admin_salary.$error.required">급여담당 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.admin_salary.$error.minlength">급여담당 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.admin_salary.$error.maxlength">급여담당 란을 1자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.admin_duty.$dirty && Form.admin_duty.$invalid, 'has-success':Form.admin_duty.$valid}" >
+                  <label class="control-label"> 근태담당 <span class="symbol "></span></label>
+                  <input type="text" placeholder="근태담당" class="form-control" name="admin_duty" ng-model="myform.admin_duty" ng-minlength="0" ng-maxlength="1"  />
+                  <span class="error text-small block" ng-if="Form.admin_duty.$dirty && Form.admin_duty.$error.required">근태담당 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.admin_duty.$error.minlength">근태담당 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.admin_duty.$error.maxlength">근태담당 란을 1자 이내로 입력하세요!</span>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+              </div>
+            </fieldset>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: FORM VALIDATION -->
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()"><i class="ti-close"></i> Close</button>
+  </div>
+</script>
+

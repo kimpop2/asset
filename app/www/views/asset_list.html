@@ -1,0 +1,126 @@
+<style>
+a, a:focus, a:hover, a:active {
+  outline: 0 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  /*color: #004999;*/
+  color: dimgray;
+}
+/*a:hover{
+	font-size: 1.2em;
+}*/
+</style>
+<!-- start: List -->
+<div ct-fullheight data-ct-fullheight-exclusion="header, footer">
+	<!-- /// controller:  'AssetListCtrl' -  localtion: js/rnd_asset/asset_list_ctrl.js /// -->
+	<div class="inbox" id="inbox" ng-controller="AssetListCtrl" toggleable active-class="message-open">
+		<!-- start: OPTIONS -->
+		<div class="col email-options">
+			<div class="padding-15">
+				<button class="btn btn-blue btn-block margin-bottom-30">
+					Compose {{$scope.isLargeDevice}}
+				</button>
+				<p class="email-options-title no-margin">
+					BROWSE
+				</p>
+				<ul class="main-options padding-15">
+					<li ng-repeat="item in lists">
+						<a href ng-if="item.cnt > 0" ng-click="loadMessages(item.code)">
+							<span class="title text-left"><i class="ti-search"></i> {{item.name}}</span>
+							<span class="badge pull-right" valign="center" ng-if="item.cnt">{{item.cnt}}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- end: EMAIL OPTIONS -->
+		<!-- start: EMAIL LIST -->
+		<div class="col email-list" ng-hide="$state.current.name.indexOf('asset_detail') >= 0 && (isMobileDevice || isSmallDevice)">
+			<div class="wrap-list">
+				<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+					<div class="messages-options padding-15">
+						<div class="btn-group" uib-dropdown>
+							<button type="button" class="btn btn-blue btn-wide">
+								관리부서
+							</button>
+							<button type="button" class="btn btn-blue dropdown-toggle" uib-dropdown-toggle>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-light" role="menu">
+								<li ng-repeat="item in lists">
+									<a href ng-if="item.cnt > 0" class="margin-left-5 margin-right-5" style="text-align:left" ng-click="loadMessages(item.code)">
+										<span class="title text-left" style="color: dimgray">{{item.name}}</span>
+										<span class="badge pull-right" style="background-color:ForestGreen;margin-top:10px;" ng-if="item.cnt">{{item.cnt}}</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<button class="btn btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+							<i class="ti-search"></i>
+						</button>
+						<button class="btn btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<div class="messages-search">
+						<form>
+							<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+						</form>
+					</div>
+				</div>
+				<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+					<li ng-if="!messages.length">
+						<div class="no-messages">
+							<h5>No data found.</h5>
+						</div>
+
+						<!-- <h4 class="text-small text-bold margin-top-10 margin-left-15">
+							No data found.
+						</h4> -->
+					</li>
+					<li class="messages-item"
+                        ng-class="{starred: message.starred}"
+						ng-repeat="message in messages | orderBy: 'asset_code' | filter:filters | filter:inbox.search">
+
+						<a message-item="{{message.id}}" ui-sref="app.mobile_asset.asset_list.asset_detail({detailID:message.id, assetCode: message.asset_code})" href>
+							
+							<span title="{{ 'Mark as starred' }}"
+							  class="messages-item-star"
+							  ng-init="message.starred = true"
+							  ng-click="message.starred = !message.starred">
+							    <i class="fa fa-star"></i>
+							</span>
+							
+							<img alt="{{ message.asset_code }}"
+							  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+							  class="messages-item-avatar bordered border-primary">
+
+							<span class="messages-item-from">{{ message.asset_code }}</span>
+
+							<div class="messages-item-time">
+								<span class="text">{{ message.acquisition_date | date: "yyyy-MM-dd" }}</span>
+							</div>
+							
+							<span class="messages-item-subject">{{ message.asset_name }}</span>
+
+							<span class="messages-item-content">[관리부서] {{ message.cost_center_code }}</span>
+
+							<span class="messages-item-content">[비고사항] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- end: EMAIL LIST -->
+		<!-- start: EMAIL READER -->
+		<div class="email-reader" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true" ng-show="$state.current.name.indexOf('asset_detail')>= 0 || isLargeDevice || isSmallDevice">
+			<div ui-view>
+				<div class="no-messages" style="top:7%">
+					<h5>No data has been selected</h5>
+				</div>
+			</div>
+		</div>
+		<!-- end: EMAIL READER -->
+	</div>
+</div>
+<!-- end: MESSAGES -->

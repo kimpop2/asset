@@ -1,0 +1,488 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="page-title" class="padding-top-15 padding-bottom-15">
+	<div class="row">
+		<div class="col-sm-7">
+			<h3 class="mainTitle" translate="dashboard.WELCOME" translate-values="{ appName: app.name }">WELCOME TO RND Asset</h3>
+			<span class="mainDescription">Dashboard</span>
+		</div>
+		<div class="col-sm-5">
+			<!-- start: 현재월 기준으로 6개월치 데이타 표시함 -->
+			<!-- /// controller:  'DashBoardMonthTxnCtrl' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+			<ul class="mini-stats pull-right" ng-controller="DashBoardMonthTxnCtrl">
+				<li>
+					<div class="sparkline">
+						<span jq-sparkline ng-model="sparkline_1" type="bar" height="20px" bar-color="#D43F3A"></span>
+					</div>
+					<div class="values">
+						<strong class="text-dark">{{line1_cnt | number}}</strong>
+						<p class="text-small no-margin">
+							자산등록
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="sparkline">
+						<span jq-sparkline ng-model="sparkline_2" type="bar" height="20px" bar-color="#5CB85C"></span>
+					</div>
+					<div class="values">
+						<strong class="text-dark">{{line2_cnt | number}}</strong>
+						<p class="text-small no-margin">
+							대여반납
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="sparkline">
+						<span jq-sparkline ng-model="sparkline_3" type="bar" height="20px" bar-color="#46B8DA"></span>
+					</div>
+					<div class="values">
+						<strong class="text-dark">{{line3_cnt | number}}</strong>
+						<p class="text-small no-margin">
+							교환수리
+						</p>
+					</div>
+				</li>
+			</ul>
+			<!-- end: MINI STATS WITH SPARKLINE -->
+		</div>
+	</div>
+</section>
+<!-- end: DASHBOARD TITLE -->
+<!-- start: FEATURED BOX LINKS -->
+<div class="container-fluid container-fullw bg-white">
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mbl_listview" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">기초정보</h2>
+					</a>
+					<p class="text-extra-small">
+						자산,분류,설치장소 등 조회
+					<p class="links cl-effect-1">
+						<a ui-sref="app.mobile_asset.mbl_listview" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.asset_list" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">자산현황</h2>
+					</a>
+					<p class="text-extra-small">
+						등록된 자산에 대한 전체 현황
+					<p class="links cl-effect-1">
+						<a ui-sref="app.mobile_asset.asset_list" href="#">
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mbl_txnview" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">처리실적</h2>
+					</a>
+					<p class="text-extra-small">
+						이동,대여,반납 현황조회
+					<p class="links cl-effect-1">
+						<a ui-sref="app.mobile_asset.mbl_txnview" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mobile_asset_request" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">고장신고</h2>
+					</a>
+					<p class="text-extra-small">
+						등록 자산의 고장신고 및 각종요청
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.mobile_asset.mobile_asset_request" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mobile_asset_move" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">자산이동</h2>
+					</a>
+					<p class="text-extra-small">
+						등록 자산의 이동,대여,반납 처리
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.mobile_asset.mobile_asset_move" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.asset.asset_ex_repair" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+						<h2 class="StepTitle">교환수리</h2>
+					</a>
+					<p class="text-extra-small">
+						등록 자산의 수리 및 부품교환 요청
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.asset.asset_ex_repair" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mobile_nfc_item" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+					<h2 class="StepTitle">NFC Reader</h2>
+					</a>
+					<p class="text-extra-small">
+						NFC 태그 후 품목정보 표시
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.mobile_asset.mobile_nfc_item" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mobile_qr_asset" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+					<h3 class="StepTitle">QR Code(자산)</h3>
+					</a>
+					<p class="text-extra-small">
+						QR Code를 스캔 후 자산정보 표시
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.mobile_asset.mobile_qr_asset" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-white no-radius text-center">
+				<div class="panel-body">
+					<a ui-sref="app.mobile_asset.mobile_qr_logistics" href="#">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span>
+					<h3 class="StepTitle">QR Code(물류)</h3>
+					</a>
+					<p class="text-extra-small">
+						QR Code를 스캔 후 물류정보 표시
+					</p>
+					<p class="cl-effect-1">
+						<a ui-sref="app.mobile_asset.mobile_qr_logistics" href>
+							<span class="text-large">view more</span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end: FEATURED BOX LINKS -->
+<!-- start: FIRST SECTION -->
+<div class="container-fluid container-fullw padding-bottom-10">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="row">
+				<div class="col-md-7 col-lg-8">
+					<div class="panel panel-white no-radius">
+						<div class="panel-heading border-light">
+							<h4 class="panel-title">등록/폐기현황</h4>
+							<ul class="panel-heading-tabs border-light">
+								<li>
+									<div class="pull-right">
+										<div class="btn-group" uib-dropdown is-open="status.isopen">
+											<a uib-dropdown-toggle ng-disabled="disabled" class="padding-10">
+												<i class="ti-search "></i>
+											</a>
+											<!-- 직전 3개년도 데이타 검색 가능하게 처리 ??? -->
+											<ul class="dropdown-menu dropdown-light" role="menu">
+												<li>
+													<a href="#">
+														2015년
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														2014년
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														2013년
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</li>
+								<!-- 현재는 필요없슴 -->
+								<!--li>
+									<div class="rate">
+										<i class="fa fa-caret-up text-primary"></i><span class="value">15</span><span class="percentage">%</span>
+									</div>
+								</li-->
+								<li class="panel-tools">
+									<ct-paneltool tool-refresh="load1"></ct-paneltool>
+								</li>
+							</ul>
+						</div>
+						<div uib-collapse="visits" ng-init="visits=false" class="panel-wrapper">
+							<div class="panel-body">
+								<!-- /// controller:  'DashBoardAssetRegCtrl' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+								<div ng-controller="DashBoardAssetRegCtrl" class="height-250">
+									<canvas class="tc-chart" tc-chartjs-line chart-options="assetRegOptions" chart-data="assetRegData" chart-legend="chart1" width="100%"></canvas>
+									<div class="margin-top-20">
+										<div tc-chartjs-legend chart-legend="chart1" class="inline pull-left"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 당일 자산관련 트랜잭션 처리 현황을 progress bar로 표시함 -->
+				<div class="col-md-5 col-lg-4">
+					<div class="panel panel-white no-radius">
+						<div class="panel-heading border-light">
+							<h4 class="panel-title">처리현황(당일)</h4>
+						</div>
+						<!-- /// controller:  'DashBoardDailyCount' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+						<div class="panel-body" ng-controller="DashBoardDailyCountCtrl">
+							<h3 class="inline-block no-margin">{{dailyTxn.total}}</h3> totals
+							<uib-progressbar value="100" class="progress-xs no-radius progress-striped active" type="success"></uib-progressbar>
+							<div class="row">
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.newCnt}}</h4>
+									<uib-progressbar value="(dailyTxn.newCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="success"></uib-progressbar>
+									신규등록
+								</div>
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.disUseCnt | number}}</h4>
+									<uib-progressbar value="(dailyTxn.disUseCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="info"></uib-progressbar>
+									자산폐기
+								</div>
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.requestCnt | number}}</h4>
+									<uib-progressbar value="(dailyTxn.requestCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="danger"></uib-progressbar>
+									고장신고
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.rentCnt | number}}</h4>
+									<uib-progressbar value="(dailyTxn.rentCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="success"></uib-progressbar>
+									자산대여
+								</div>
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.returnCnt | number}}</h4>
+									<uib-progressbar value="(dailyTxn.returnCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="success"></uib-progressbar>
+									자산반납
+								</div>
+								<div class="col-sm-4">
+									<h4 class="no-margin">{{dailyTxn.exRepairCnt | number}}</h4>
+									<uib-progressbar value="(dailyTxn.exRepairCnt / dailyTxn.total) * 100" class="progress-xs no-radius no-margin" type="warning"></uib-progressbar>
+									교환수리
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end: FIRST SECTION -->
+<!-- start: SECOND SECTION -->
+<div class="container-fluid container-fullw bg-white">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="panel panel-white no-radius">
+				<div class="panel-body" ng-controller="DashBoardAssetListCtrl">
+					<div class="partition-light-grey padding-15 text-center margin-bottom-20">
+						<h4 class="no-margin margin-bottom-5">자산현황</h4>
+						<span class="text-light">설치장소 / 자산분류별(Top 10)</span>
+					</div>
+					<v-accordion class="vAccordion--default">
+						<!-- add expanded attribute to open first section -->
+						<v-pane expanded>
+							<v-pane-header>
+								설치장소별
+							</v-pane-header>
+							<v-pane-content>
+								<table class="table margin-bottom-0">
+									<thead>
+										<tr>
+											<td class="text-center">No</td>
+											<td>설치장소</td>
+											<td class="text-right">등록건수</td>
+										</tr>
+									</thead>
+									<tbody ng-repeat="data in assetData1">
+										<tr>
+											<td class="text-center">{{$index+1}}</td>
+											<td>{{data.key1}}</td>
+											<td class="text-right">{{data.key3}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</v-pane-content>
+						</v-pane>
+						<v-pane>
+							<v-pane-header>
+								자산분류별
+							</v-pane-header>
+							<v-pane-content>
+								<table class="table margin-bottom-0">
+									<thead>
+										<tr>
+											<td class="text-center">No</td>
+											<td>자산분류</td>
+											<td class="text-right">등록건수</td>
+										</tr>
+									</thead>
+									<tbody ng-repeat="data in assetData2">
+										<tr>
+											<td class="text-center">{{$index+1}}</td>
+											<td>{{data.key1}}</td>
+											<td class="text-right">{{data.key3}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</v-pane-content>
+						</v-pane>
+					</v-accordion>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="panel panel-white no-radius">
+				<div class="panel-body" ng-controller="DashBoardAssetListCtrl">
+					<div class="partition-light-grey padding-15 text-center margin-bottom-20">
+						<h4 class="no-margin margin-bottom-5">자산현황</h4>
+						<span class="text-light">관리부서별(Top 5)</span>
+					</div>
+					<!-- /// controller:  'DashBoardAssetCatCtrl' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+					<div ng-controller="DashBoardAssetCatCtrl">
+						<div class="text-center">
+							<span class="mini-pie">
+								<canvas class="tc-chart" tc-chartjs-doughnut chart-options="categoryBarOptions" chart-data="categoryBarData" chart-legend="chart3" width="100"></canvas>
+								<span>{{categoryTotal}}</span>
+						</span>
+							<span class="inline text-large no-wrap"></span>
+						</div>
+						<div class="margin-top-20 text-center legend-xs">
+							<div tc-chartjs-legend chart-legend="chart3" class="inline"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end: SECOND SECTION -->
+<!-- start: FOURTH SECTION -->
+<div class="container-fluid container-fullw bg-white">
+	<div class="row">
+		<div class="col-xs-12 col-sm-5">
+			<div class="row">
+				<!-- /// controller:  'DashBoard7DaysCtrl' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+				<div ng-controller="DashBoard7DaysCtrl">
+					<div class="col-md-12">
+						<div class="panel panel-white no-radius">
+							<div class="panel-heading border-bottom">
+								<h4 class="panel-title">7일 추세({{dateBetween}})</h4>
+							</div>
+							<div class="panel-body padding-20 text-center">
+								<div class="space10">
+									<h5 class="text-dark no-margin">고장신고</h5>
+									<h2 class="no-margin">{{line1_cnt | number}}</h2>
+									<span class="badge badge-danger margin-top-10"></span>
+								</div>
+								<div class="sparkline space10">
+									<span jq-sparkline ng-model="sparkline_1" type="line" width="80%" height="47px" line-color="#8e8e93" highlight-line-color="#c2c2c5" highlight-spot-color="#CE4641" max-spot-color="#5CB85C" min-spot-color="#D9534F" spot-radius="4" fill-color="transparent" resize="true"></span>
+								</div>
+								<span class="text-white-transparent"><i class="fa fa-clock-o"></i> 1 hour ago</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="panel panel-white no-radius">
+							<div class="panel-body padding-20 text-center">
+								<div class="space10">
+									<h5 class="text-dark no-margin">교환수리</h5>
+									<h2 class="no-margin">{{line2_cnt | number}}</h2>
+									<span class="badge badge-success margin-top-10"></span>
+								</div>
+								<div class="sparkline space10">
+									<span jq-sparkline ng-model="sparkline_2" type="line" width="80%" height="47px" line-color="#8e8e93" highlight-line-color="#c2c2c5" highlight-spot-color="#CE4641" max-spot-color="#5CB85C" min-spot-color="#D9534F" spot-radius="4" fill-color="transparent" resize="true"></span>
+								</div>
+								<span class="text-white-transparent"><i class="fa fa-clock-o"></i> 1 hour ago</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-7">
+			<div class="panel panel-white no-radius">
+				<div class="panel-heading border-bottom">
+					<h5 class="panel-title text-center">당일이력(등록,폐기,고장신고,대여,반납,교환수리)</h5>
+				</div>
+				<!-- /// controller:  'DashBoardDailyTxn' -  localtion: js/rnd_asset/asset_dashboard_ctrl.js /// -->
+				<div class="panel-body" ng-controller="DashBoardDailyTxn">
+					<ul class="timeline-xs margin-top-15 margin-bottom-15"> <!-- success, danger, info -->
+						<li class="timeline-item {{item.txnInfo}}" ng-repeat="item in dailyTxn">
+							<div class="margin-left-15">
+								<div class="text-muted text-small">
+									{{item.txnTime}}
+								</div>
+								<p>
+									[{{item.txnTitle}}] {{item.txnContent}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end: FOURTH SECTION -->

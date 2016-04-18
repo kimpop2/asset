@@ -1,0 +1,261 @@
+<div class="message-actions">
+	<ul class="actions no-margin no-padding block">
+		<li class="email-list-toggle">
+			<a ui-sref="app.mobile_asset.asset_list"><span style="color:orangered"><i class="fa fa-angle-left"></i> Back</span></a>
+		</li>
+		<li class="actions-dropdown">
+			<span class="dropdown" uib-dropdown on-toggle="toggled(open)">
+				<a href class="dropdown-toggle" uib-dropdown-toggle class="btn btn-transparent">
+					<i class="caret"></i>
+				</a>
+				<ul class="dropdown-menu dropdown-light">
+					<li>
+						<a href="#">
+							menu 1
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							menu 2
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							menu 3
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							menu 4
+						</a>
+					</li>
+				</ul>
+			</span>
+		</li>
+		<li class="no-padding">
+			<a class="text-info" href="#">
+				menu #1
+			</a>
+		</li>
+		<li class="no-padding">
+			<a href="#">
+				menu #2
+			</a>
+		</li>
+		<li class="no-padding">
+			<a href="#">
+				menu #3
+			</a>
+		</li>
+		<li class="no-padding">
+			<a href="#">
+				menu #4
+			</a>
+		</li>
+	</ul>
+</div>
+<!--div class="message-header">
+	<img alt="{{ message.from }}" ng-src="{{ message.avatar && message.avatar || noAvatarImg }}" class="message-item-avatar">
+	<div class="message-time">
+		{{message.acquisition_date | date: "yyyy-MM-dd 'at' h:mma" }}
+	</div>
+	<div class="message-from" ng-if="message.email">
+		{{message.from}} &lt;{{message.email}}&gt;
+	</div>
+	<div class="message-to">
+		To: Peter Clark
+	</div>
+</div>
+<div class="message-subject">
+	{{message.asset_name}}
+</div>
+<div class="message-content" ng-bind-html="message.content"></div-->
+
+<!-- mail-header class는 꼭 필요함. 없으면 화면 엉킴 -->
+<div class="message-header">
+	<div class="row">
+		<div class="col-md-12">
+					<blockquote class="no-marin padding-left-10">
+						<p><span class="label label-success">Selected Item : {{message.asset_code}}</span></p>
+						<p>{{message.asset_name}}</p>
+					</blockquote>
+		</div>
+	</div>
+</div>
+<div class="container-fluid container-fullw bg-white padding-top-5 padding-bottom-5">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-white" id="panelAttachImage">
+						<div class="panel-heading border-light panel-blue">
+							<h4 class="panel-title">첨부파일</h4>
+							<ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1"></ct-paneltool>
+						</div>
+						<div class="panel-body">
+							<div uib-collapse="panelAttachImage" ng-init="panelAttachImage=false" class="panel-wrapper">
+								<!--Carousel 설정 -->
+								<!--div ng-controller="CarouselDemoCtrl"-->
+								<div>
+								  <div>
+										<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+										  <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+												<img ng-src="{{slide.image}}" style="margin:auto;">
+												<div class="carousel-caption">
+												  <h4>Slide {{slide.id}}</h4>
+												  <p>{{slide.text}}</p>
+												</div>
+										  </uib-slide>
+										</uib-carousel>
+								  </div>
+								  <!--div class="row">
+										<div class="col-md-6">
+										  <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
+										  <button type="button" class="btn btn-info" ng-click="randomize()">Randomize slides</button>
+										  <div class="checkbox">
+												<label>
+												  <input type="checkbox" ng-model="noWrapSlides">
+												  Disable Slide Looping
+												</label>
+										  </div>
+										</div>
+										<div class="col-md-6">
+										  Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
+										  <br />Enter a negative number or 0 to stop the interval.
+										</div>
+								  </div-->
+								</div>
+								<!-- Carousel -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-white" id="panelDetailInfo">
+						<div class="panel-heading border-light panel-blue">
+							<h4 class="panel-title">상세정보</h4>
+							<ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load2"></ct-paneltool>
+						</div>
+						<div uib-collapse="panelDetailInfo" ng-init="panelDetailInfo=false" class="panel-wrapper">
+							<div class="panel-body">
+								<dl class="dl-horizontal well">
+									<dt>자산번호</dt>
+									<dd>{{message.asset_code}}</dd>
+									<dt>자산명</dt>
+									<dd>{{message.asset_name}}</dd>
+									<dt>관리부서</dt>
+									<dd>{{message.cost_center_code}}</dd>
+									<dt>자산분류</dt>
+									<dd>{{message.asset_cat_code}}</dd>
+									<dt>관리자(정)</dt>
+									<dd>{{message.main_mgr_no}}</dd>
+									<dt>관리자(부)</dt>
+									<dd>{{message.sub_mgr_no}}</dd>
+									<dt>모델명</dt>
+									<dd>{{message.asset_model_name}}</dd>
+									<dt>제작회사</dt>
+									<dd>{{message.manufacturer_name}}</dd>
+									<dt>구입처</dt>
+									<dd>{{message.purchaser_name}}</dd>
+									<dt>취득일자</dt>
+									<dd>{{message.acquisition_date}}</dd>
+									<dt>감가상각년수A</dt>
+									<dd>{{message.depreciation_a}}</dd>
+									<dt>감가상각년수B</dt>
+									<dd>{{message.depreciation_b}}</dd>
+									<dt>잔존가액</dt>
+									<dd>{{message.salvage_amount}}</dd>
+									<dt>제조번호</dt>
+									<dd>{{message.manufacture_no}}</dd>
+									<dt>제조일자</dt>
+									<dd>{{message.manufacture_date}}</dd>
+									<dt>기계의외형</dt>
+									<dd>{{message.external_apperance}}</dd>
+									<dt>중량</dt>
+									<dd>{{message.gross_weight}}</dd>
+									<dt>검교정대상여부</dt>
+									<dd>{{message.inspection_flag}}</dd>
+									<dt>검교정점검주기</dt>
+									<dd>{{message.inspection_period}}</dd>
+									<dt>검교정점검단위</dt>
+									<dd>{{message.inspection_unit}}</dd>
+									<dt>취득가액</dt>
+									<dd>{{message.acquisition_amount}}</dd>
+									<dt>설치/보관장소</dt>
+									<dd>{{message.install_area_code}}</dd>
+									<dt>최종이동일련번호</dt>
+									<dd>{{message.final_move_seq}}</dd>
+									<dt>최종폐기일련번호</dt>
+									<dd>{{message.final_disuse_seq}}</dd>
+									<dt>사용여부</dt>
+									<dd>{{message.status}}</dd>
+									<dt>비고</dt>
+									<dd>{{message.remarks}}</dd>
+									<dt>생성자</dt>
+									<dd>{{message.created_by}}</dd>
+									<dt>생성일자</dt>
+									<dd>{{message.creation_date}}</dd>
+									<dt>수정자</dt>
+									<dd>{{message.last_updated_by}}</dd>
+									<dt>수정일자</dt>
+									<dd>{{message.last_update_date}}</dd>
+									<dt>id</dt>
+									<dd>{{message.object_id}}</dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 장비이력 -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-white" id="panelMenu">
+				<div class="panel-heading border-light panel-blue">
+					<h4 class="panel-title">장비이력</h4>
+					<ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1"></ct-paneltool>
+				</div>
+				<div uib-collapse="panelMenu" ng-init="panelMenu=false" class="panel-wrapper">
+					<div class="panel-body">
+						<!-- 메뉴설정 -->
+						<!-- /// controller:  'AssetDetailMenuCrtl' -  localtion: js/controllers/assetListCtrl.js /// -->
+						<div class="carousel-main" ng-controller="AssetDetailMenuCrtl">
+	            <div
+	                class="custom-indicator rn-carousel-indicator custom_menu_span">
+	                <span
+	                		ng-repeat="menu in slideCarouselMenu"
+	                    ng-class="{active: $index==$parent.carouselIndexNum}"
+	                    ng-click="$parent.carouselIndexNum = $index">&nbsp;<i class="{{menu.menuIcon}}"></i>&nbsp;{{menu.menuTitle}}&nbsp;</span>
+	                <hr class="custom_menu_hr">
+	            </div>
+	            <ul rn-carousel
+	                rn-carousel-index="carouselIndexNum"
+	                rn-carousel-auto-slide
+	                rn-carousel-pause-on-hover
+	                rn-carousel-control
+	                class="carousel_li">
+	                <!-- 메뉴별 화면: <li> tag와 메뉴 건수가 일치해야 함 -->
+	                <li>
+	                	<ng-include src="'views/templates/asset_detail_part_tmpl.html'"></ng-include> <!-- 부품 -->
+	                </li>
+	                <li>
+	                	<ng-include src="'views/templates/asset_detail_capa_tmpl.html'"></ng-include> <!-- 능력 -->
+	                </li>
+	                <li>
+	                	<ng-include src="'views/templates/asset_detail_ex_repair_tmpl.html'"></ng-include> <!-- 수리이력 -->
+	                </li>
+	                <li>
+	                	<ng-include src="'views/templates/asset_detail_move_tmpl.html'"></ng-include> <!-- 자산이동 -->
+	                </li>
+	            </ul>
+	          </div>
+	        </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

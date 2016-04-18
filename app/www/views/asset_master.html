@@ -1,0 +1,415 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 자산마스타
+ * File          : asset_master.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+<style>
+.grid-align {
+    text-align: right;
+}
+</style>
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="asset_master.app.TITLE">Asset Master</h1>
+      <span class="mainDescription" translate="asset_master.app.DESC"> Information of 자산마스타</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="AssetMasterCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'asset_master.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pagination ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="asset_master_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.asset_code" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="asset_master.app.TITLE"> Asset Master</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_code.$dirty && Form.asset_code.$invalid, 'has-success':Form.asset_code.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_master.field.ASSET_CODE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.ASSET_CODE' | translate }}" class="form-control" name="asset_code" ng-model="myform.asset_code" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.asset_code.$dirty && Form.asset_code.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.ASSET_CODE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_code.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.ASSET_CODE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_code.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.ASSET_CODE', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_name.$dirty && Form.asset_name.$invalid, 'has-success':Form.asset_name.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_master.field.ASSET_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.ASSET_NAME' | translate }}" class="form-control" name="asset_name" ng-model="myform.asset_name" ng-minlength="1" ng-maxlength="150" required />
+                  <span class="error text-small block" ng-if="Form.asset_name.$dirty && Form.asset_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.ASSET_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.ASSET_NAME', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.ASSET_NAME', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_name_local.$dirty && Form.asset_name_local.$invalid, 'has-success':Form.asset_name_local.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.ASSET_NAME_LOCAL' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.ASSET_NAME_LOCAL' | translate }}" class="form-control" name="asset_name_local" ng-model="myform.asset_name_local" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.asset_name_local.$dirty && Form.asset_name_local.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.ASSET_NAME_LOCAL'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_name_local.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.ASSET_NAME_LOCAL', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_name_local.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.ASSET_NAME_LOCAL', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_cat_code.$dirty && Form.asset_cat_code.$invalid, 'has-success':Form.asset_cat_code.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_master.field.ASSET_CAT_CODE' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="asset_cat_code" name="asset_cat_code" ng-model="myform.asset_cat_code" required>
+                      <ui-select-match placeholder="{{ 'asset_master.field.ASSET_CAT_CODE' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in asset_category_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.asset_cat_code = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.asset_cat_code.$dirty && Form.asset_cat_code.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.ASSET_CAT_CODE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.cost_center_code.$dirty && Form.cost_center_code.$invalid, 'has-success':Form.cost_center_code.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.COST_CENTER_CODE' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="cost_center_code" name="cost_center_code" ng-model="myform.cost_center_code" >
+                      <ui-select-match placeholder="{{ 'asset_master.field.COST_CENTER_CODE' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in cost_center_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.cost_center_code = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.cost_center_code.$dirty && Form.cost_center_code.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.COST_CENTER_CODE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.main_mgr_no.$dirty && Form.main_mgr_no.$invalid, 'has-success':Form.main_mgr_no.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.MAIN_MGR_NO' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="main_mgr_no" name="main_mgr_no" ng-model="myform.main_mgr_no" >
+                      <ui-select-match placeholder="{{ 'asset_master.field.MAIN_MGR_NO' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in asset_user_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.main_mgr_no = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.main_mgr_no.$dirty && Form.main_mgr_no.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.MAIN_MGR_NO'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.sub_mgr_no.$dirty && Form.sub_mgr_no.$invalid, 'has-success':Form.sub_mgr_no.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.SUB_MGR_NO' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="sub_mgr_no" name="sub_mgr_no" ng-model="myform.sub_mgr_no" >
+                      <ui-select-match placeholder="{{ 'asset_master.field.SUB_MGR_NO' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in asset_user_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.sub_mgr_no = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.sub_mgr_no.$dirty && Form.sub_mgr_no.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.SUB_MGR_NO'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_model_name.$dirty && Form.asset_model_name.$invalid, 'has-success':Form.asset_model_name.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.ASSET_MODEL_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.ASSET_MODEL_NAME' | translate }}" class="form-control" name="asset_model_name" ng-model="myform.asset_model_name" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.asset_model_name.$dirty && Form.asset_model_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.ASSET_MODEL_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_model_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.ASSET_MODEL_NAME', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.asset_model_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.ASSET_MODEL_NAME', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.manufacturer_name.$dirty && Form.manufacturer_name.$invalid, 'has-success':Form.manufacturer_name.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.MANUFACTURER_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.MANUFACTURER_NAME' | translate }}" class="form-control" name="manufacturer_name" ng-model="myform.manufacturer_name" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.manufacturer_name.$dirty && Form.manufacturer_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.MANUFACTURER_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.manufacturer_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.MANUFACTURER_NAME', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.manufacturer_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.MANUFACTURER_NAME', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.purchaser_name.$dirty && Form.purchaser_name.$invalid, 'has-success':Form.purchaser_name.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.PURCHASER_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.PURCHASER_NAME' | translate }}" class="form-control" name="purchaser_name" ng-model="myform.purchaser_name" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.purchaser_name.$dirty && Form.purchaser_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.PURCHASER_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.purchaser_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.PURCHASER_NAME', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.purchaser_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.PURCHASER_NAME', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.acquisition_date.$dirty && Form.acquisition_date.$invalid, 'has-success':Form.acquisition_date.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.ACQUISITION_DATE' | translate }} </label>
+                  <p class="input-group">
+                    <input type="text" id="myform.acquisition_date" name="acquisition_date" placeholder="{{ 'asset_master.field.ACQUISITION_DATE' | translate }}" ng-model="myform.acquisition_date" ng-click="acquisition_date.open = true"
+                      class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-append-to-body="false" close-text="Close"
+                      is-open="acquisition_date.open" min-date="acquisition_date.min" max-date="acquisition_date.max" datepicker-options="acquisition_date.options"  />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="acquisition_date.open = true">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+                    </p>
+                  <span class="error text-small block" ng-if="Form.acquisition_date.$dirty && Form.acquisition_date.$invalid"> {{'common.message.CALENDAR' | translate:{obj:'asset_master.field.ACQUISITION_DATE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.depreciation_a.$dirty && Form.depreciation_a.$invalid, 'has-success':Form.depreciation_a.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.DEPRECIATION_A' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.DEPRECIATION_A' | translate }}" class="form-control" name="depreciation_a" ng-model="myform.depreciation_a" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.depreciation_a.$dirty && Form.depreciation_a.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.DEPRECIATION_A'} }} </span>
+                  <span class="error text-small block" ng-if="Form.depreciation_a.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.DEPRECIATION_A', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.depreciation_a.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.DEPRECIATION_A', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.REMARKS'} }} </span>
+                </div>
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+                <div class="form-group" ng-class="{'has-error':Form.depreciation_b.$dirty && Form.depreciation_b.$invalid, 'has-success':Form.depreciation_b.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.DEPRECIATION_B' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.DEPRECIATION_B' | translate }}" class="form-control" name="depreciation_b" ng-model="myform.depreciation_b" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.depreciation_b.$dirty && Form.depreciation_b.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.DEPRECIATION_B'} }} </span>
+                  <span class="error text-small block" ng-if="Form.depreciation_b.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.DEPRECIATION_B', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.depreciation_b.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.DEPRECIATION_B', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.salvage_amount.$dirty && Form.salvage_amount.$invalid, 'has-success':Form.salvage_amount.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.SALVAGE_AMOUNT' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.SALVAGE_AMOUNT' | translate }}" class="form-control" name="salvage_amount" ng-model="myform.salvage_amount" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.salvage_amount.$dirty && Form.salvage_amount.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.SALVAGE_AMOUNT'} }} </span>
+                  <span class="error text-small block" ng-if="Form.salvage_amount.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.SALVAGE_AMOUNT', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.salvage_amount.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.SALVAGE_AMOUNT', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.manufacture_no.$dirty && Form.manufacture_no.$invalid, 'has-success':Form.manufacture_no.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.MANUFACTURE_NO' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.MANUFACTURE_NO' | translate }}" class="form-control" name="manufacture_no" ng-model="myform.manufacture_no" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.manufacture_no.$dirty && Form.manufacture_no.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.MANUFACTURE_NO'} }} </span>
+                  <span class="error text-small block" ng-if="Form.manufacture_no.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.MANUFACTURE_NO', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.manufacture_no.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.MANUFACTURE_NO', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.manufacture_date.$dirty && Form.manufacture_date.$invalid, 'has-success':Form.manufacture_date.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.MANUFACTURE_DATE' | translate }} </label>
+                  <p class="input-group">
+                    <input type="text" id="myform.manufacture_date" name="manufacture_date" placeholder="{{ 'asset_master.field.MANUFACTURE_DATE' | translate }}" ng-model="myform.manufacture_date" ng-click="manufacture_date.open = true"
+                      class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-append-to-body="false" close-text="Close"
+                      is-open="manufacture_date.open" min-date="manufacture_date.min" max-date="manufacture_date.max" datepicker-options="manufacture_date.options"  />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="manufacture_date.open = true">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+                    </p>
+                  <span class="error text-small block" ng-if="Form.manufacture_date.$dirty && Form.manufacture_date.$invalid"> {{'common.message.CALENDAR' | translate:{obj:'asset_master.field.MANUFACTURE_DATE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.external_apperance.$dirty && Form.external_apperance.$invalid, 'has-success':Form.external_apperance.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.EXTERNAL_APPERANCE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.EXTERNAL_APPERANCE' | translate }}" class="form-control" name="external_apperance" ng-model="myform.external_apperance" ng-minlength="0" ng-maxlength="250"  />
+                  <span class="error text-small block" ng-if="Form.external_apperance.$dirty && Form.external_apperance.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.EXTERNAL_APPERANCE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.external_apperance.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.EXTERNAL_APPERANCE', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.external_apperance.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.EXTERNAL_APPERANCE', val:'250'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.gross_weight.$dirty && Form.gross_weight.$invalid, 'has-success':Form.gross_weight.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.GROSS_WEIGHT' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.GROSS_WEIGHT' | translate }}" class="form-control" name="gross_weight" ng-model="myform.gross_weight" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.gross_weight.$dirty && Form.gross_weight.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.GROSS_WEIGHT'} }} </span>
+                  <span class="error text-small block" ng-if="Form.gross_weight.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.GROSS_WEIGHT', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.gross_weight.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.GROSS_WEIGHT', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.inspection_flag.$dirty && Form.inspection_flag.$invalid, 'has-success':Form.inspection_flag.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.INSPECTION_FLAG' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="inspection_flag" name="inspection_flag" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.inspection_flag"  />
+                    <label for="inspection_flag" translate="common.code.YES"> Yes </label>
+                    <span class="error text-small block" ng-if="Form.inspection_flag.$dirty && Form.inspection_flag.$error.required"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.INSPECTION_FLAG'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.inspection_period.$dirty && Form.inspection_period.$invalid, 'has-success':Form.inspection_period.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.INSPECTION_PERIOD' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.INSPECTION_PERIOD' | translate }}" class="form-control" name="inspection_period" ng-model="myform.inspection_period" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.inspection_period.$dirty && Form.inspection_period.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.INSPECTION_PERIOD'} }} </span>
+                  <span class="error text-small block" ng-if="Form.inspection_period.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.INSPECTION_PERIOD', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.inspection_period.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.INSPECTION_PERIOD', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.inspection_unit.$dirty && Form.inspection_unit.$invalid, 'has-success':Form.inspection_unit.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.INSPECTION_UNIT' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="inspection_unit" name="inspection_unit" ng-model="myform.inspection_unit" >
+                      <ui-select-match placeholder="{{ 'asset_master.field.INSPECTION_UNIT' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in inspection_unit_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.inspection_unit = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.inspection_unit.$dirty && Form.inspection_unit.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.INSPECTION_UNIT'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.acquisition_amount.$dirty && Form.acquisition_amount.$invalid, 'has-success':Form.acquisition_amount.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.ACQUISITION_AMOUNT' | translate }} </label>
+                  <input type="number" placeholder="{{ 'asset_master.field.ACQUISITION_AMOUNT' | translate }}" class="form-control" name="acquisition_amount" ng-model="myform.acquisition_amount" ng-minlength="0" ng-maxlength="10"  />
+                  <span class="error text-small block" ng-if="Form.acquisition_amount.$dirty && Form.acquisition_amount.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.ACQUISITION_AMOUNT'} }} </span>
+                  <span class="error text-small block" ng-if="Form.acquisition_amount.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.ACQUISITION_AMOUNT', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.acquisition_amount.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.ACQUISITION_AMOUNT', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.install_area_code.$dirty && Form.install_area_code.$invalid, 'has-success':Form.install_area_code.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.INSTALL_AREA_CODE' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="install_area_code" name="install_area_code" ng-model="myform.install_area_code" >
+                      <ui-select-match placeholder="{{ 'asset_master.field.INSTALL_AREA_CODE' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in installation_area_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.install_area_code = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.install_area_code.$dirty && Form.install_area_code.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.INSTALL_AREA_CODE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_key.$dirty && Form.file_key.$invalid, 'has-success':Form.file_key.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.FILE_KEY' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_master.field.FILE_KEY' | translate }}" class="form-control" name="file_key" ng-model="myform.file_key" ng-minlength="0" ng-maxlength="50"  />
+                  <span class="error text-small block" ng-if="Form.file_key.$dirty && Form.file_key.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_master.field.FILE_KEY'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_master.field.FILE_KEY', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_master.field.FILE_KEY', val:'50'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.status.$dirty && Form.status.$invalid, 'has-success':Form.status.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_master.field.STATUS' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="status" name="status" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.status"  />
+                    <label for="status" translate="common.code.USE"> Use </label>
+                    <span class="error text-small block" ng-if="Form.status.$dirty && Form.status.$error.required"> {{'common.message.CHECKED' | translate:{obj:'asset_master.field.STATUS'} }} </span>
+                  </div>
+                </div>
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

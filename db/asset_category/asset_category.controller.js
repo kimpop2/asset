@@ -1,0 +1,141 @@
+﻿/* *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 자산분류
+ * File          : asset_category.controller.js
+ * Description   :
+ *                 Using Rails-like standard naming convention.
+ *                 GET     /url              ->  search
+ *                 GET     /url/:id          ->  show
+ *                 POST    /url              ->  insert
+ *                 PUT     /url/:id          ->  update
+ *                 DELETE  /url/:id          ->  delete
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** */
+
+'use strict';
+
+var AssetCategory = require('./asset_category.service');
+// Search Records
+// GET     /url  --> All
+// GET     /url?field1=value1&field2=value2... --> Query
+exports.search = function(req, res) {
+
+    var asset_category = new AssetCategory(req.query);
+
+    asset_category.search(function (err, result) {
+        if(err) { return handleError(res, err); }
+
+        return res.status(200).json(result);
+    });
+};
+
+// Get a record by object_id
+// GET     /url/:id (= object_id)
+exports.show = function(req, res) {
+
+    var asset_category = new AssetCategory(req.params);
+
+    asset_category.findById(function (err, entity) {
+        if (err) { return handleError(res, err); }
+        if(!entity) { return res.status(404).end(); }
+
+        return res.status(200).json(entity);
+    });
+};
+
+// Creating a new Record.
+// POST    /url
+exports.insert = function(req, res) {
+    var asset_category = new AssetCategory(req.body);
+
+    asset_category.insert(function(err, result) {
+        if(err) { return handleError(res, err); }
+
+        return res.status(201).json(result);
+    });
+};
+
+// Updating the Record.
+// PUT     /url/:id (= object_id)
+exports.update = function(req, res) {
+
+    var asset_category = new AssetCategory(req.params);
+
+    asset_category.findById(function (err, entity) {
+
+        if (err) { return handleError(res, err); }
+        if(!entity) { return res.status(404).end(); }
+
+        req.body.asset_cat_code       = entity.asset_cat_code      ;
+
+        asset_category = new AssetCategory(req.body);
+        asset_category.update(function(err, result) {
+
+           if (err) { return handleError(res, err); }
+
+           return res.status(200).json(result);
+        });
+    });
+};
+
+// Deleting the Record by object_id
+// DELETE  /url/:id (= object_id)
+exports.delete = function(req, res) {
+
+    var asset_category = new AssetCategory(req.params);
+
+    asset_category.findById(function (err, entity) {
+
+        if (err) { return handleError(res, err); }
+        if(!entity) { return res.status(404).end(); }
+
+        asset_category = new AssetCategory(entity);
+        asset_category.delete(function(err, result) {
+
+           if (err) { return handleError(res, err); }
+
+           result.outBinds.object_id = entity.object_id;
+
+           return res.status(200).json(result);
+        });
+    });
+};
+
+// If you use this method, needs req.body.action field!!
+// Change router.post('/', controller.create);
+//    --> router.post('/', controller.procedure);
+exports.procedure = function(req, res) {
+    var asset_category = new AssetCategory(req.body);
+
+    if(req.body.action === 'insert') {
+        asset_category.insert(function(err, result) {
+            if(err) { return handleError(res, err); }
+
+            return res.status(201).json(result);
+        });
+    }
+    else if(req.body.action === 'update') {
+        asset_category.update(function(err, result) {
+           if (err) { return handleError(res, err); }
+
+           return res.status(200).json(result);
+        });
+    }
+    else if(req.body.action === 'delete') {
+        asset_category.delete(function(err, result) {
+           if(err) { return handleError(res, err); }
+
+            return res.status(200).json(result);
+        });
+    }
+};
+
+function handleError(res, err) {
+    return res.status(500).send(err);
+}
+
+

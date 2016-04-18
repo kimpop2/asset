@@ -1,0 +1,19 @@
+										<!-- /// controller:  'AssetDetailSurveyCrtl' -  localtion: js/controllers/assetListCtrl.js /// -->
+										<div class="panel panel-white no-padding no-border no-margin" ng-controller="AssetDetailSurveyCrtl">
+											<div class="panel-body no-padding no-border no-margin">
+												<div class="table-responsive border-1 margin-left-1 margin-right-1">
+													<table ng-table="tableParamsSurvey" class="table" ng-class="isMobileDevice === true ? 'text-small' : ''">
+														<tbody ng-repeat="p in $data">
+															<tr id="tr{{p.asset_code + p.asset_seq}}">
+																<td class="rowTd padding-4" data-title="'자산번호'" sortable="'asset_code'">{{p.asset_code}}</td>
+																<td class="rowTd padding-4" data-title="'SEQ'"      sortable="'survey_seq'">{{p.survey_seq}}</td>
+																<td class="rowTd padding-4" data-title="'실사일자'" sortable="'survey_date'">{{p.survey_date}}</td>
+																<td class="rowTd padding-4" data-title="'실사내역'" sortable="'survey_desc'">{{p.survey_desc}}</td>
+																<td class="rowTd padding-4" data-title="'실사결과'" sortable="'survey_result'">{{p.survey_result}}</td>
+																<td class="rowTd padding-4" data-title="'담당자'"   sortable="'survey_charger'">{{p.survey_charger}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>

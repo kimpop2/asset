@@ -1,0 +1,203 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 첨부파일
+ * File          : attachment_file.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="attachment_file.app.TITLE">Attachment File</h1>
+      <span class="mainDescription" translate="attachment_file.app.DESC"> Information of 첨부파일</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="AttachmentFileCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'attachment_file.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="attachment_file_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.attach_file_seq"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="attachment_file.app.TITLE"> Attachment File</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.file_key.$dirty && Form.file_key.$invalid, 'has-success':Form.file_key.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'attachment_file.field.FILE_KEY' | translate }} </label>
+                  <input type="text" placeholder="{{ 'attachment_file.field.FILE_KEY' | translate }}" class="form-control" name="file_key" ng-model="myform.file_key" ng-minlength="1" ng-maxlength="50" required />
+                  <span class="error text-small block" ng-if="Form.file_key.$dirty && Form.file_key.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.FILE_KEY'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'attachment_file.field.FILE_KEY', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'attachment_file.field.FILE_KEY', val:'50'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_name.$dirty && Form.file_name.$invalid, 'has-success':Form.file_name.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'attachment_file.field.FILE_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'attachment_file.field.FILE_NAME' | translate }}" class="form-control" name="file_name" ng-model="myform.file_name" ng-minlength="1" ng-maxlength="255" required />
+                  <span class="error text-small block" ng-if="Form.file_name.$dirty && Form.file_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.FILE_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'attachment_file.field.FILE_NAME', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'attachment_file.field.FILE_NAME', val:'255'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_ext.$dirty && Form.file_ext.$invalid, 'has-success':Form.file_ext.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'attachment_file.field.FILE_EXT' | translate }} </label>
+                  <input type="text" placeholder="{{ 'attachment_file.field.FILE_EXT' | translate }}" class="form-control" name="file_ext" ng-model="myform.file_ext" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.file_ext.$dirty && Form.file_ext.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.FILE_EXT'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_ext.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'attachment_file.field.FILE_EXT', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_ext.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'attachment_file.field.FILE_EXT', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_path.$dirty && Form.file_path.$invalid, 'has-success':Form.file_path.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'attachment_file.field.FILE_PATH' | translate }} </label>
+                  <input type="text" placeholder="{{ 'attachment_file.field.FILE_PATH' | translate }}" class="form-control" name="file_path" ng-model="myform.file_path" ng-minlength="0" ng-maxlength="255"  />
+                  <span class="error text-small block" ng-if="Form.file_path.$dirty && Form.file_path.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.FILE_PATH'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_path.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'attachment_file.field.FILE_PATH', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_path.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'attachment_file.field.FILE_PATH', val:'255'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_size.$dirty && Form.file_size.$invalid, 'has-success':Form.file_size.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'attachment_file.field.FILE_SIZE' | translate }} </label>
+                  <input type="number" placeholder="{{ 'attachment_file.field.FILE_SIZE' | translate }}" class="form-control" name="file_size" ng-model="myform.file_size" ng-minlength="1" ng-maxlength="10" required />
+                  <span class="error text-small block" ng-if="Form.file_size.$dirty && Form.file_size.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.FILE_SIZE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_size.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'attachment_file.field.FILE_SIZE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_size.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'attachment_file.field.FILE_SIZE', val:'10'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_flag.$dirty && Form.file_flag.$invalid, 'has-success':Form.file_flag.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'attachment_file.field.FILE_FLAG' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="file_flag" name="file_flag" ng-model="myform.file_flag" required>
+                      <ui-select-match placeholder="{{ 'attachment_file.field.FILE_FLAG' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in file_flag_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.file_flag = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.file_flag.$dirty && Form.file_flag.$invalid"> {{'common.message.CHECKED' | translate:{obj:'attachment_file.field.FILE_FLAG'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.status.$dirty && Form.status.$invalid, 'has-success':Form.status.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'attachment_file.field.STATUS' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="status" name="status" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.status"  />
+                    <label for="status" translate="common.code.USE"> Use </label>
+                    <span class="error text-small block" ng-if="Form.status.$dirty && Form.status.$error.required"> {{'common.message.CHECKED' | translate:{obj:'attachment_file.field.STATUS'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'attachment_file.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'attachment_file.field.REMARKS'} }} </span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

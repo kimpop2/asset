@@ -1,0 +1,221 @@
+<style>
+/*a, a:focus, a:hover, a:active {
+  outline: 0 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  color: dimgray;
+}*/
+
+.inbox .email-reader {
+  height: 100%;
+  margin-left: 240px; /* margin-left: 600px; */
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  background: #ffffff;
+}
+
+.inbox .email-list {
+  width: 100% !important; /* width: 360px !important; */
+  border-right: 1px solid #dee5e7;
+  background: #ffffff;
+}
+
+.inbox .wrap-list {
+  width: 100%; /* width: 359px; */
+  height: 100% !important;
+  position: relative; /* position: relative */
+}
+
+.messages-list .messages-item span {
+  color: #000000; /* color: #007AFF; */
+  display: block;
+}
+
+.messages-list .messages-item:hover {
+  background-color: white;
+  cursor: default !important; /* cursor: pointer !important; */
+}
+
+.messages-list .messages-item {
+  padding: 5px 15px 5px 15px; /* padding: 5px 15px 5px 25px; */
+}
+</style>
+<!-- start: List -->
+<div ct-fullheight data-ct-fullheight-exclusion="header, footer">
+	<div class="row" style="height:100%">
+		<div class="col-md-12" style="height:100%;background-color:white;">
+
+			<!-- 메뉴설정 -->
+			<!-- /// controller:  'MblTxnViewCtrl' -  localtion: js/controllers/mblTxnViewCtrl.js /// -->
+			<div class="carousel-main bg-white" style="height:100%;margin-top:5px;" ng-controller="MblTxnViewCtrl">
+        <div class="custom-indicator rn-carousel-indicator custom_menu_span">
+            <span
+            		ng-repeat="menu in slideCarouselMenu"
+                ng-class="{active: $index==$parent.carouselIndexNum}"
+                ng-click="$parent.carouselIndexNum = $index">&nbsp;<i class="{{menu.menuIcon}}"></i>&nbsp;{{menu.menuTitle}}&nbsp;
+              </span>
+            <hr class="custom_menu_hr">
+        </div>
+				<!--
+				rn-carousel-index="carouselIndexNum"
+				rn-carousel-buffered
+				rn-carousel-pause-on-hover
+				rn-carousel-auto-slide
+				rn-carousel-transition="hexagon"
+				rn-carousel-control
+				-->
+        <ul rn-carousel
+            rn-carousel-index="carouselIndexNum"
+            class="carousel_li">
+            <!-- 메뉴별 화면: <li> tag와 메뉴 건수가 일치해야 함 -->
+            <li><!-- 자산이동 -->
+							<div class="inbox" id="inbox">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li class="messages-item">
+												<ng-include src="'views/templates/asset_detail_move_tmpl.html'"></ng-include> <!-- 자산이동 -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+
+            <li><!-- 자산신고 -->
+							<div class="inbox" id="inbox" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li class="messages-item">
+												<ng-include src="'views/templates/asset_detail_request_tmpl.html'"></ng-include> <!-- 자산신고 -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+
+            <li><!-- 교환수리 -->
+							<div class="inbox" id="inbox" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li class="messages-item">
+												<ng-include src="'views/templates/asset_detail_ex_repair_tmpl.html'"></ng-include> <!-- 교환수리 -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+
+            <li><!-- 자산실사 -->
+							<div class="inbox" id="inbox" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li class="messages-item">
+												<ng-include src="'views/templates/asset_detail_survey_tmpl.html'"></ng-include> <!-- 자산실사 -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+
+            <li><!-- 자산폐기 -->
+							<div class="inbox" id="inbox" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li class="messages-item">
+												<ng-include src="'views/templates/asset_detail_disuse_tmpl.html'"></ng-include> <!-- 자산폐기 -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+        </ul>
+      </div>
+		</div>
+	</div>
+</div>
+<!-- end: MESSAGES -->

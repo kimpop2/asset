@@ -1,0 +1,748 @@
+{
+  "common" : {
+    "app" : {
+       "TITLE" : "기초코드관리"
+      ,"MENU"  : "기초코드관리"
+      ,"DESC"  : "기초코드관리 소개"
+      ,"HELP"  : "기초코드관리 도움말"
+      ,"SEARCH": "{{data}} 검색"
+      ,"PARAM" : "{{data}} 검색조건"
+      ,"LIST"  : "{{data}} 목록"
+      ,"NEW"   : "{{data}} 입력"
+      ,"EDIT"  : "{{data}} 수정"
+      ,"DELETE": "{{data}} 삭제"
+      ,"RELOAD": "{{data}} 갱신"
+      ,"RESET" : "원래대로"
+      ,"CANCEL": "취소"
+      ,"SUBMIT": "실행"
+      ,"OK"    : "확인"
+      ,"CLOSE" : "닫기"
+    }
+    ,
+    "code" : {
+       "ASSET_PROC_FLAG" : "자산신고처리구분"
+      ,"ASSET_REQ_FLAG"  : "자산신고요청구분"
+      ,"DISUSE_REASON"   : "자산폐기사유"
+      ,"EX_RE_PROC_FLAG" : "교환수리처리상태"
+      ,"EX_RE_REQ_FLAG"  : "교환수리요청상태"
+      ,"FILE_FLAG"       : "파일구분"
+      ,"INSPECTION_FLAG" : "검교정대상여부"
+      ,"INSPECTION_UNIT" : "검교정주기"
+      ,"MOVE_TYPE"       : "이동대여반납구분"
+      ,"SURVEY_RESULT"   : "자산실사결과"
+      ,"USE_STATUS"      : "사용여부"
+      ,"YES_NO"          : "예,아니오"
+    }
+    ,
+    "message" : {
+       "REQUIRED": "{{field}} 란을 입력하십시오."
+      ,"SELECTED": "{{field}} 란을 선택하십시오."
+      ,"CHECKED" : "{{field}} 란을 체크하십시오."
+      ,"MINLEN"  : "{{minlen}} 자리 이상으로 입력하십시오."
+      ,"MAXLEN"  : "{{maxlen}} 자리 이하로 입력하십시오."
+      ,"MINVALUE": "{{minvalue}} 이상으로 입력하십시오."
+      ,"MAXVALUE": "{{maxvalue}} 이하로 입력하십시오."
+      ,"MINDATE" : "{{mindate}} 이후로 입력하십시오."
+      ,"MAXDATE" : "{{maxdate}} 이전으로 입력하십시오."
+      ,"NUMBER"  : "숫자로 입력하십시오."
+      ,"EMAIL"   : "이메일로 입력하십시오."
+      ,"DATE"    : "날짜로 입력하십시오."
+      ,"CALENDAR": "달력에서 선택하십시오."
+      ,"ERROR"   : "{{error}} 에러가 발생했습니다!"
+      ,"INVALID" : "유효하지 않은 값입니다!"
+      ,"OK"                 : "{{ok}} 처리에 성공했습니다!"
+      ,"ERR_TXNTYPE"        : "{{txntype}} 요청은 잘못된 처리요청입니다!"
+      ,"ERR_DATA_EXIST"     : "{{data}} 자료가 존재합니다!"
+      ,"ERR_DATA_NOTFOUND"  : "{{data}} 자료가 없습니다!"
+      ,"ERR_CODENAME_EXIST" : "{{codename}} 동일한 코드가 존재합니다!"
+      ,"ERR_UNKNOWN"        : "{{error}} 알수없는 에러가 발생했습니다!"
+    }
+    ,
+    "execute" : {
+       "EXEC_MADD"  : "{{master}} 입력"
+      ,"EXEC_MUDT"  : "{{master}} 수정"
+      ,"EXEC_MDEL"  : "{{master}} 삭제"
+      ,"EXEC_CADD"  : "{{detail}} 입력"
+      ,"EXEC_CUDT"  : "{{detail}} 수정"
+      ,"EXEC_CDEL"  : "{{detail}} 삭제"
+      ,"SRCH_MDAT"  : "{{master}} 검색"
+      ,"SRCH_CDAT"  : "{{detail}} 검색"
+    }
+    ,
+    "field" : {
+       "CREATED_BY"      : "등록자"
+      ,"CREATION_DATE"   : "등록시각"
+      ,"LAST_UPDATED_BY" : "수정자"
+      ,"LAST_UPDATE_DATE": "수정시각"
+      ,"USER"            : "사용자"
+    }
+  }
+  ,
+  "asset" : {
+    "app" : {
+       "TITLE" : "자산관리"
+      ,"MENU"  : "자산관리"
+      ,"DESC"  : "자산관리소개"
+      ,"HELP"  : "자산관리도움말"
+    }
+  }
+  ,
+  "mobile" : {
+    "app" : {
+       "TITLE" : "모바일자산관리"
+      ,"MENU"  : "모바일자산관리"
+      ,"DESC"  : "모바일자산관리소개"
+      ,"HELP"  : "모바일자산관리도움말"
+    }
+  }
+  ,
+  "asset_user" : {
+    "field" : {
+       "USER_ID"              : "사용자id"
+      ,"USER_NAME"            : "사용자명"
+      ,"USER_PWD"             : "비밀번호"
+      ,"USER_ROLE"            : "역할"
+      ,"PHONE"                : "연락처"
+      ,"EMAIL"                : "이메일"
+      ,"LANG"                 : "기본언어"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "사용자"
+      ,"MENU"  : "사용자"
+      ,"DESC"  : "사용자 소개"
+      ,"HELP"  : "사용자 도움말"
+    }
+  }
+  ,
+  "common_code" : {
+    "field" : {
+       "CODE_TYPE"            : "공통코드"
+      ,"DISPLAY_SEQ"          : "출력순서"
+      ,"LANG"                 : "언어코드"
+      ,"CODE"                 : "코드"
+      ,"CODE_DESC"            : "언어별코드명"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "공통코드"
+      ,"MENU"  : "공통코드"
+      ,"DESC"  : "공통코드 소개"
+      ,"HELP"  : "공통코드 도움말"
+    }
+  }
+  ,
+  "language" : {
+    "field" : {
+       "LANG"                 : "언어코드"
+      ,"LANG_NAME"            : "언어명"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "언어"
+      ,"MENU"  : "언어"
+      ,"DESC"  : "언어 소개"
+      ,"HELP"  : "언어 도움말"
+    }
+  }
+  ,
+  "asset_category" : {
+    "field" : {
+       "ASSET_CAT_CODE"       : "자산분류코드"
+      ,"ASSET_CAT_NAME"       : "자산분류명"
+      ,"ASSET_CAT_NAME_LOCAL" : "자산분류명_지역"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "자산분류"
+      ,"MENU"  : "자산분류"
+      ,"DESC"  : "자산분류 소개"
+      ,"HELP"  : "자산분류 도움말"
+    }
+  }
+  ,
+  "cost_center" : {
+    "field" : {
+       "COST_CENTER_CODE"     : "코스트센타코드"
+      ,"COST_CENTER_NAME"     : "코스트센타명"
+      ,"COST_CENTER_NAME_LOCAL" : "코스트센타명_지역"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "코스트센타"
+      ,"MENU"  : "코스트센타"
+      ,"DESC"  : "코스트센타 소개"
+      ,"HELP"  : "코스트센타 도움말"
+    }
+  }
+  ,
+  "installation_area" : {
+    "field" : {
+       "INSTALL_AREA_CODE"    : "설치장소코드"
+      ,"INSTALL_AREA_NAME"    : "설치장소명"
+      ,"INSTALL_AREA_NAME_LOCAL" : "설치장소명_지역"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "설치장소"
+      ,"MENU"  : "설치장소"
+      ,"DESC"  : "설치장소 소개"
+      ,"HELP"  : "설치장소 도움말"
+    }
+  }
+  ,
+  "calibration_range" : {
+    "field" : {
+       "CALIBRATION_CODE"     : "검교정측정코드"
+      ,"CALIBRATION_VALUE"    : "검교정측정수식"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "검교정측정범위"
+      ,"MENU"  : "검교정측정범위"
+      ,"DESC"  : "검교정측정범위 소개"
+      ,"HELP"  : "검교정측정범위 도움말"
+    }
+  }
+  ,
+  "asset_common_part" : {
+    "field" : {
+       "PART_NO"              : "부속품목번호"
+      ,"PART_NAME"            : "부품명"
+      ,"PART_NAME_LOCAL"      : "부품명_지역"
+      ,"PART_SPEC"            : "부품규격"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "부속품목"
+      ,"MENU"  : "부속품목"
+      ,"DESC"  : "부속품목 소개"
+      ,"HELP"  : "부속품목 도움말"
+    }
+  }
+  ,
+  "asset_master" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"ASSET_NAME"           : "자산명"
+      ,"ASSET_NAME_LOCAL"     : "자산명_지역"
+      ,"ASSET_CAT_CODE"       : "자산분류"
+      ,"COST_CENTER_CODE"     : "관리부서"
+      ,"MAIN_MGR_NO"          : "관리자_정"
+      ,"SUB_MGR_NO"           : "관리자_부"
+      ,"ASSET_MODEL_NAME"     : "모델명"
+      ,"MANUFACTURER_NAME"    : "제작회사"
+      ,"PURCHASER_NAME"       : "구입처"
+      ,"ACQUISITION_DATE"     : "취득일자"
+      ,"DEPRECIATION_A"       : "감가상각년수A"
+      ,"DEPRECIATION_B"       : "감가상각년수B"
+      ,"SALVAGE_AMOUNT"       : "잔존가액"
+      ,"MANUFACTURE_NO"       : "제조번호"
+      ,"MANUFACTURE_DATE"     : "제조일자"
+      ,"EXTERNAL_APPERANCE"   : "기계의외형"
+      ,"GROSS_WEIGHT"         : "중량"
+      ,"INSPECTION_FLAG"      : "검교정대상여부"
+      ,"INSPECTION_PERIOD"    : "검교정_점검주기"
+      ,"INSPECTION_UNIT"      : "검교정_점검단위"
+      ,"ACQUISITION_AMOUNT"   : "취득가액"
+      ,"INSTALL_AREA_CODE"    : "설치/보관장소"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"FINAL_MOVE_SEQ"       : "최종이동일련번호"
+      ,"FINAL_DISUSE_SEQ"     : "최종폐기일련번호"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "자산마스타"
+      ,"MENU"  : "자산마스타"
+      ,"DESC"  : "자산마스타 소개"
+      ,"HELP"  : "자산마스타 도움말"
+    }
+  }
+  ,
+  "asset_part" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"ASSET_PART_SEQ"       : "부속품일련번호"
+      ,"PART_NO"              : "부속품목번호"
+      ,"PART_NAME"            : "품명"
+      ,"PART_NAME_LOCAL"      : "부품명_지역"
+      ,"PART_SPEC"            : "규격"
+      ,"QUANTITY"             : "재고수량"
+      ,"UNIT_PRICE"           : "단가"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "장비부속품"
+      ,"MENU"  : "장비부속품"
+      ,"DESC"  : "장비부속품 소개"
+      ,"HELP"  : "장비부속품 도움말"
+    }
+  }
+  ,
+  "asset_request" : {
+    "field" : {
+       "REQUEST_SEQ"          : "요청일련번호"
+      ,"ASSET_CODE"           : "자산번호"
+      ,"REQUEST_FLAG"         : "요청구분"
+      ,"REQUEST_DATE"         : "요청일시"
+      ,"REQUEST_CHARGER"      : "요청자"
+      ,"REQ_SUBJECT"          : "제목"
+      ,"REQUEST_DESC"         : "신고내역"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"PROCESS_FLAG"         : "처리구분"
+      ,"PROCESS_DATE"         : "처리일시"
+      ,"PROCESS_CHARGER"      : "처리자"
+      ,"PROCESS_DESC"         : "처리내역"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "자산처리요청"
+      ,"MENU"  : "자산처리요청"
+      ,"DESC"  : "자산처리요청 소개"
+      ,"HELP"  : "자산처리요청 도움말"
+    }
+  }
+  ,
+  "asset_move" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"MOVE_SEQ"             : "이동일련번호"
+      ,"INSTALL_AREA_CODE"    : "이동대여반납장소"
+      ,"MOVE_FLAG"            : "이동대여반납구분"
+      ,"MOVE_DATE"            : "이동대여반납일자"
+      ,"MOVE_REASON"          : "이동대여반납사유"
+      ,"REQEST_CHARGER"       : "이동대여반납요청자"
+      ,"PROCESS_CHARGER"      : "이동대여반납처리자"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "이동대여반납"
+      ,"MENU"  : "이동대여반납"
+      ,"DESC"  : "이동대여반납 소개"
+      ,"HELP"  : "이동대여반납 도움말"
+    }
+  }
+  ,
+  "asset_disuse" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"DISUSE_SEQ"           : "폐기일련번호"
+      ,"DISUSE_DATE"          : "폐기일자"
+      ,"DISUSE_REASON"        : "폐기사유"
+      ,"DISUSE_DESC"          : "폐기내역"
+      ,"DISUSE_CHARGER"       : "폐기처리담당자"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "장비폐기"
+      ,"MENU"  : "장비폐기"
+      ,"DESC"  : "장비폐기 소개"
+      ,"HELP"  : "장비폐기 도움말"
+    }
+  }
+  ,
+  "asset_capa" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"CAPA_SEQ"             : "일련번호"
+      ,"NAME"                 : "항목명"
+      ,"NAME_LOCAL"           : "항목명_지역"
+      ,"DESCRIPTION"          : "항목설명"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "장비능력및주요부치수"
+      ,"MENU"  : "장비능력및주요부치수"
+      ,"DESC"  : "장비능력및주요부치수 소개"
+      ,"HELP"  : "장비능력및주요부치수 도움말"
+    }
+  }
+  ,
+  "asset_ex_repair" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"EX_RE_SEQ"            : "교환수리일련번호"
+      ,"ASSET_PART_SEQ"       : "부속품일련번호"
+      ,"REQUEST_SEQ"          : "교환수리요청번호"
+      ,"EX_RE_REQ_FLAG"       : "교환수리요청구분"
+      ,"EX_RE_PART_NAME"      : "교환수리품목명"
+      ,"EX_RE_PART_DESC"      : "교환수리품목규격"
+      ,"REQ_SUBJECT"          : "제목"
+      ,"EX_RE_REQUESTER"      : "교환수리요청자"
+      ,"EX_RE_REQ_DATE"       : "교환수리요청일자"
+      ,"EX_RE_DATE"           : "교환수리처리일자"
+      ,"EX_RE_DESC"           : "교환수리처리내역"
+      ,"EX_RE_PROC_FLAG"      : "교환수리처리상태"
+      ,"EX_RE_COST"           : "교환수리비용"
+      ,"EX_RE_CHARGER"        : "교환수리처리담당자"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "장비교환수리"
+      ,"MENU"  : "장비교환수리"
+      ,"DESC"  : "장비교환수리 소개"
+      ,"HELP"  : "장비교환수리 도움말"
+    }
+  }
+  ,
+  "asset_survey" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"SURVEY_SEQ"           : "실사일련번호"
+      ,"MOVE_SEQ"             : "이동일련번호"
+      ,"SURVEY_DATE"          : "실사일자"
+      ,"SURVEY_DESC"          : "실사내역"
+      ,"SURVEY_RESULT"        : "실사결과"
+      ,"SURVEY_CHARGER"       : "처리담당자"
+      ,"FILE_KEY"             : "첨부파일"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "장비실사"
+      ,"MENU"  : "장비실사"
+      ,"DESC"  : "장비실사 소개"
+      ,"HELP"  : "장비실사 도움말"
+    }
+  }
+  ,
+  "asset_calibration" : {
+    "field" : {
+       "ASSET_CODE"           : "자산번호"
+      ,"CALIBRATION_SEQ"      : "검교정일련번호"
+      ,"CALIBRATION_DATE"     : "검교정일자"
+      ,"CALIBRATION_CODE"     : "검교정측정코드"
+      ,"CALIBRATION_CHARGER"  : "검교정담당자"
+      ,"CALIBRATION_RESULT"   : "검교정내역"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "검교정"
+      ,"MENU"  : "검교정"
+      ,"DESC"  : "검교정 소개"
+      ,"HELP"  : "검교정 도움말"
+    }
+  }
+  ,
+  "attachment_file" : {
+    "field" : {
+       "ATTACH_FILE_SEQ"      : "첨부일련번호"
+      ,"FILE_KEY"             : "첨부파일키"
+      ,"FILE_NAME"            : "파일명"
+      ,"FILE_EXT"             : "파일확장자"
+      ,"FILE_PATH"            : "파일경로"
+      ,"FILE_SIZE"            : "파일크기"
+      ,"FILE_FLAG"            : "파일구분"
+      ,"STATUS"               : "사용여부"
+      ,"REMARKS"              : "비고"
+    }
+    ,
+    "app" : {
+       "TITLE" : "첨부파일"
+      ,"MENU"  : "첨부파일"
+      ,"DESC"  : "첨부파일 소개"
+      ,"HELP"  : "첨부파일 도움말"
+    }
+  }
+
+
+
+  ,
+  "dashboard": {
+    "WELCOME": "환영합니다 {{appName}}"
+  },
+  "topbar": {
+    "messages": {
+    	"MAIN": "메시지",
+      	"HEADER": "읽지 않은 메시지",
+      	"SEEALL": "전체보기"
+    },
+    
+    "activities": {      "MAIN": "Activities",
+      "HEADER": "새로운 알림이 있습니다.",
+      "SEEALL": "전체보기"
+    },
+    "user": {
+      "PROFILE": "냐의 정보",
+      "CALENDAR" : "나의 일정",
+      "MESSAGES" : "나의 메시지",
+      "LOCKSCREEN" : "화면 잠금",
+      "LOGOUT" : "로그아웃"
+    }
+  },
+  "offsidebar": {
+    "chat": {
+      "ONLINE": "On-Line",
+      "OFFLINE": "Off-Line",
+      "BACK": "뒤로",
+      "SEND" : "전송",
+      "PLACEHOLDER": "메시지"
+    },
+    "favorites": {
+      "MAIN": "즐겨찾기"
+    },
+    "settings": {
+      "MAIN": "기본 설정",
+      "NOTIFICATIONS": "알림 가능",
+      "SHOWEMAIL": "나의 E-mail 보기",
+      "SHOWUSERS": "오프라인 사용자 보기",
+      "EMAILALERT": "E-mail 알림",
+      "SMSALERT": "SMS 알림",
+      "SAVE" : "변경 저장"     
+    }  
+  },
+  "sidebar": {
+    "heading": {
+      "NAVIGATION": "Main Navigation",
+      "FEATURES": "주요 특징",
+      "DOCUMENTATION": "문서" 
+    },
+    "search": {
+      "PLACEHOLDER": "검색..."
+    },
+    "nav": {
+      "dashboard": {
+      	"MAIN": "관리화면",
+        "ASSET_MAIN": "Dashboard(New)"
+      },
+      "common": {
+        "MAIN": "기준정보",
+        "INSTALLAREA": "설치장소관리",
+        "COSTCENTER": "장비분류관리",
+        "PARTS": "부속품목관리",
+        "CODE" : "기초코드관리"
+      },
+      "asset": {
+        "MAIN": "자산관리",
+        "ASSETMASTER": "마스타관리",
+        "ASSETMASTER2": "자산 Master(hgjang)",
+        "ASSETPART": "부속품관리",
+        "ASSETREPAIR": "이력관리",
+        "ASSETCAPA" : "능력 및 치수관리",
+        "ASSETVALUE" : "잔존가관리",
+        "ASSETMOVE" : "이동관리",
+        "ASSETSURVEY" : "실사관리",
+        "ASSETDISUSE" : "폐기관리"
+      },
+      "barcode": {
+        "PRINT": "바코드출력관리"
+      },
+      "mobile": {
+        "ASSET": "모바일자산관리"
+      },
+
+
+      "mobile_asset": {
+        "ASSET_LIST": "자산리스트",
+        "ASSET_MOVE": "자산이동"
+      },
+
+
+
+      "interface": {
+        "ASSET": "SAP 인터페이스"
+      },
+      "element": {
+      	"MAIN": "UI Elements",
+        "ELEMENTS": "Elements",
+        "BUTTONS": "Buttons",
+        "LINKS": "Link 효과",
+        "FONTAWESOME" : "Font Awesome 아이콘",
+        "LINEARICONS" : "Linear 아이콘",
+        "MODALS" : "모달창",
+        "TOGGLE" : "토글",
+        "TABS" : "탭 & 펼침",
+        "PANELS" : "패널",
+        "NOTIFICATIONS": "알림",
+        "SLIDERS": "사이드바",
+        "TREEVIEW": "트리뷰",
+        "MEDIA": "미디어",
+        "NESTABLE": "Nestable List",
+        "TYPOGRAPHY": "Typography"
+      },
+      "tables": {
+        "MAIN": "테이블",
+        "BASIC": "기본 테이블",
+        "RESPONSIVE": "반응형 테이블",
+        "DYNAMIC": "동적 테이블",
+        "DATA": "ngTable"
+      },
+      "forms": {
+        "MAIN": "폼",
+        "ELEMENTS": "폼 요소",
+        "XEDITABLE": "X-Editable 요소",
+        "TEXTEDITOR": "편집기",
+        "WIZARD": "폼 마법사",
+        "VALIDATION": "폼 유효성체크",
+        "CROPPING": "이미지 자르기",
+        "UPLOAD": "복수 파일 업로드"
+      },
+      "login": {
+        "MAIN": "로그인",
+        "LOGIN": "로그인",
+        "LOGOUT": "로그아웃",
+        "REGISTRATION": "사용자등록",
+        "FORGOT": "비밀번호 찾기",
+        "LOCKSCREEN": "화면 잠금"
+      },
+      "logout": {
+        "MAIN": "로그아웃"
+      },
+      "pages": {
+        "MAIN": "페이지",
+        "USERPROFILE": "사용자 정보",
+        "INVOICE": "요청서",
+        "TIMELINE": "연혁",
+        "CALENDAR": "달력",
+        "MESSAGES": "메시지",
+        "BLANKPAGE": "시작 페이지"
+      },
+      "utilities": {
+        "MAIN": "유틸리티",
+        "SEARCHRESULT": "검색결과",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500",
+        "PRICING": "가격 테이블"
+      },
+      "3level": {
+        "MAIN": "3단 메뉴",
+        "Item1": {
+        	"MAIN": "2단계 메뉴1",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item2": {
+        	"MAIN": "2단계 메뉴2",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item3": {
+        	"MAIN": "2단계 메뉴3",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        }
+      },
+      "4level": {
+        "MAIN": "4단 메뉴",
+        "Item1": {
+        	"MAIN": "2단계 메뉴1",
+        	"link1" : {
+        		"MAIN": "3단계 메뉴1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"         		
+        	},
+        	"link2" : {
+        		"MAIN": "3단계 메뉴2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "3단계 메뉴3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"       		
+        	}        	
+        },
+        "Item2": {
+        	"MAIN": "2단계 메뉴2",
+        	"link1" : {
+        		"MAIN": "3단계 메뉴1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link2" : {
+        		"MAIN": "3단계 메뉴2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "3단계 메뉴3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"         		
+        	}        	
+        },
+        "Item3": {
+        	"MAIN": "2단계 메뉴3",
+        	"link1" : {
+        		"MAIN": "3단계 메뉴1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link2" : {
+        		"MAIN": "3단계 메뉴2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "3단계 메뉴3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	}        	
+        }
+      },
+      "maps": {
+        "MAIN": "구글맵"
+      },
+      "charts": {
+        "MAIN": "도표"
+      }
+    }
+  },
+  "footer": {
+    "copyright": {
+    	"MAIN": "Copyright",
+      	"MESSAGE": "All rights reserved"
+    }
+  },
+  "setting": {
+  	"MAIN" : "스타일 선택",
+    "FIXEDHEADER": "헤더 고정",
+    "FIXEDSIDEBAR": "사이드바 고정",
+    "CLOSEDSIDEBAR": "사이드바 닫기",
+    "FIXEDFOOTER": "푸터 고정"
+  }
+}

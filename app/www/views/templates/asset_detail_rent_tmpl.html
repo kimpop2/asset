@@ -1,0 +1,20 @@
+										<!-- /// controller:  'AssetDetailRentCrtl' -  localtion: js/controllers/assetListCtrl.js /// -->
+										<div class="panel panel-white no-padding no-border no-margin" ng-controller="AssetDetailRentCrtl">
+											<div class="panel-body no-padding no-border no-margin">
+												<div class="table-responsive border-1 margin-left-1 margin-right-1">
+													<table ng-table="tableParamsRent" class="table" ng-class="isMobileDevice === true ? 'text-small' : ''">
+														<tbody ng-repeat="p in $data">
+															<!--tr id="tr{{p.id}}" ng-class-odd="'bg-light-beige'" ng-class-even="'bg-light-blue'"-->
+															<!--tr id="tr{{p.id}}" ng-class-odd="'odd'" ng-class-even="'even'"-->
+															<tr id="tr{{p.part_no}}">
+																<td class="rowTd padding-4" data-title="'품목코드'" sortable="'part_no'">{{p.part_no}}</td>
+																<td class="rowTd padding-4" data-title="'품명'"     sortable="'part_name'">{{p.part_name}}</td>
+																<td class="rowTd padding-4" data-title="'규격'"     sortable="'part_spec'">{{p.part_spec}}</td>
+																<td class="rowTd padding-4" data-title="'재고수량'" sortable="'quantity'">{{p.quantity}}</td>
+																<td class="rowTd padding-4" data-title="'단가'"     sortable="'unit_price'">{{p.unit_price}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>

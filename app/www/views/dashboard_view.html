@@ -1,0 +1,290 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : Dashboard
+ * File          : dashboard_view.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="sidebar.nav.asset.ASSETMASTER">Dashboard</h1>
+      <span class="mainDescription">Dashboard 정보에 대한 등록, 수정, 삭제 및 사용여부를 관리합니다</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="DashboardViewCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> New</a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> Edit</a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> Delete</a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i></a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="search..."
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="Filter Search" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i> Search
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="dashboard_view_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title"></h3>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-white">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <div class="row">
+            <fieldset>
+              <legend> Dashboard</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.command.$dirty && Form.command.$invalid, 'has-success':Form.command.$valid}" >
+                  <label class="control-label"> command <span class="symbol "></span></label>
+                  <input type="text" placeholder="command" class="form-control" name="command" ng-model="myform.command" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.command.$dirty && Form.command.$error.required">command 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.command.$error.minlength">command 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.command.$error.maxlength">command 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.key1.$dirty && Form.key1.$invalid, 'has-success':Form.key1.$valid}" >
+                  <label class="control-label"> 키1 <span class="symbol "></span></label>
+                  <input type="text" placeholder="키1" class="form-control" name="key1" ng-model="myform.key1" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.key1.$dirty && Form.key1.$error.required">키1 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key1.$error.minlength">키1 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key1.$error.maxlength">키1 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.key2.$dirty && Form.key2.$invalid, 'has-success':Form.key2.$valid}" >
+                  <label class="control-label"> 키2 <span class="symbol "></span></label>
+                  <input type="text" placeholder="키2" class="form-control" name="key2" ng-model="myform.key2" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.key2.$dirty && Form.key2.$error.required">키2 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key2.$error.minlength">키2 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key2.$error.maxlength">키2 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.key3.$dirty && Form.key3.$invalid, 'has-success':Form.key3.$valid}" >
+                  <label class="control-label"> 키3 <span class="symbol "></span></label>
+                  <input type="text" placeholder="키3" class="form-control" name="key3" ng-model="myform.key3" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.key3.$dirty && Form.key3.$error.required">키3 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key3.$error.minlength">키3 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key3.$error.maxlength">키3 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.key4.$dirty && Form.key4.$invalid, 'has-success':Form.key4.$valid}" >
+                  <label class="control-label"> 키4 <span class="symbol "></span></label>
+                  <input type="text" placeholder="키4" class="form-control" name="key4" ng-model="myform.key4" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.key4.$dirty && Form.key4.$error.required">키4 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key4.$error.minlength">키4 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key4.$error.maxlength">키4 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.key5.$dirty && Form.key5.$invalid, 'has-success':Form.key5.$valid}" >
+                  <label class="control-label"> 키5 <span class="symbol "></span></label>
+                  <input type="text" placeholder="키5" class="form-control" name="key5" ng-model="myform.key5" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.key5.$dirty && Form.key5.$error.required">키5 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key5.$error.minlength">키5 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.key5.$error.maxlength">키5 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data01.$dirty && Form.data01.$invalid, 'has-success':Form.data01.$valid}" >
+                  <label class="control-label"> 데이터1 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터1" class="form-control" name="data01" ng-model="myform.data01" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data01.$dirty && Form.data01.$error.required">데이터1 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data01.$error.minlength">데이터1 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data01.$error.maxlength">데이터1 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data02.$dirty && Form.data02.$invalid, 'has-success':Form.data02.$valid}" >
+                  <label class="control-label"> 데이터2 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터2" class="form-control" name="data02" ng-model="myform.data02" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data02.$dirty && Form.data02.$error.required">데이터2 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data02.$error.minlength">데이터2 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data02.$error.maxlength">데이터2 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data03.$dirty && Form.data03.$invalid, 'has-success':Form.data03.$valid}" >
+                  <label class="control-label"> 데이터3 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터3" class="form-control" name="data03" ng-model="myform.data03" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data03.$dirty && Form.data03.$error.required">데이터3 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data03.$error.minlength">데이터3 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data03.$error.maxlength">데이터3 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data04.$dirty && Form.data04.$invalid, 'has-success':Form.data04.$valid}" >
+                  <label class="control-label"> 데이터4 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터4" class="form-control" name="data04" ng-model="myform.data04" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data04.$dirty && Form.data04.$error.required">데이터4 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data04.$error.minlength">데이터4 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data04.$error.maxlength">데이터4 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data05.$dirty && Form.data05.$invalid, 'has-success':Form.data05.$valid}" >
+                  <label class="control-label"> 데이터5 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터5" class="form-control" name="data05" ng-model="myform.data05" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data05.$dirty && Form.data05.$error.required">데이터5 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data05.$error.minlength">데이터5 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data05.$error.maxlength">데이터5 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data06.$dirty && Form.data06.$invalid, 'has-success':Form.data06.$valid}" >
+                  <label class="control-label"> 데이터6 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터6" class="form-control" name="data06" ng-model="myform.data06" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data06.$dirty && Form.data06.$error.required">데이터6 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data06.$error.minlength">데이터6 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data06.$error.maxlength">데이터6 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data07.$dirty && Form.data07.$invalid, 'has-success':Form.data07.$valid}" >
+                  <label class="control-label"> 데이터7 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터7" class="form-control" name="data07" ng-model="myform.data07" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data07.$dirty && Form.data07.$error.required">데이터7 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data07.$error.minlength">데이터7 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data07.$error.maxlength">데이터7 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data08.$dirty && Form.data08.$invalid, 'has-success':Form.data08.$valid}" >
+                  <label class="control-label"> 데이터8 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터8" class="form-control" name="data08" ng-model="myform.data08" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data08.$dirty && Form.data08.$error.required">데이터8 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data08.$error.minlength">데이터8 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data08.$error.maxlength">데이터8 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data09.$dirty && Form.data09.$invalid, 'has-success':Form.data09.$valid}" >
+                  <label class="control-label"> 데이터9 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터9" class="form-control" name="data09" ng-model="myform.data09" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data09.$dirty && Form.data09.$error.required">데이터9 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data09.$error.minlength">데이터9 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data09.$error.maxlength">데이터9 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data10.$dirty && Form.data10.$invalid, 'has-success':Form.data10.$valid}" >
+                  <label class="control-label"> 데이터10 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터10" class="form-control" name="data10" ng-model="myform.data10" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data10.$dirty && Form.data10.$error.required">데이터10 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data10.$error.minlength">데이터10 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data10.$error.maxlength">데이터10 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data11.$dirty && Form.data11.$invalid, 'has-success':Form.data11.$valid}" >
+                  <label class="control-label"> 데이터11 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터11" class="form-control" name="data11" ng-model="myform.data11" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data11.$dirty && Form.data11.$error.required">데이터11 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data11.$error.minlength">데이터11 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data11.$error.maxlength">데이터11 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data12.$dirty && Form.data12.$invalid, 'has-success':Form.data12.$valid}" >
+                  <label class="control-label"> 데이터12 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터12" class="form-control" name="data12" ng-model="myform.data12" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data12.$dirty && Form.data12.$error.required">데이터12 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data12.$error.minlength">데이터12 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data12.$error.maxlength">데이터12 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data13.$dirty && Form.data13.$invalid, 'has-success':Form.data13.$valid}" >
+                  <label class="control-label"> 데이터13 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터13" class="form-control" name="data13" ng-model="myform.data13" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data13.$dirty && Form.data13.$error.required">데이터13 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data13.$error.minlength">데이터13 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data13.$error.maxlength">데이터13 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data14.$dirty && Form.data14.$invalid, 'has-success':Form.data14.$valid}" >
+                  <label class="control-label"> 데이터14 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터14" class="form-control" name="data14" ng-model="myform.data14" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data14.$dirty && Form.data14.$error.required">데이터14 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data14.$error.minlength">데이터14 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data14.$error.maxlength">데이터14 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.data15.$dirty && Form.data15.$invalid, 'has-success':Form.data15.$valid}" >
+                  <label class="control-label"> 데이터15 <span class="symbol "></span></label>
+                  <input type="text" placeholder="데이터15" class="form-control" name="data15" ng-model="myform.data15" ng-minlength="0" ng-maxlength="40"  />
+                  <span class="error text-small block" ng-if="Form.data15.$dirty && Form.data15.$error.required">데이터15 란을 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data15.$error.minlength">데이터15 란을 0자 이상으로 입력하세요!</span>
+                  <span class="error text-small block" ng-if="Form.data15.$error.maxlength">데이터15 란을 40자 이내로 입력하세요!</span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)">
+                  Reset
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: FORM VALIDATION -->
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()"><i class="ti-close"></i> Close</button>
+  </div>
+</script>
+

@@ -1,0 +1,25 @@
+										<!-- /// controller:  'AssetDetailExRepairCrtl' -  localtion: js/controllers/assetListCtrl.js /// -->
+										<div class="panel panel-white no-padding no-border no-margin" ng-controller="AssetDetailExRepairCrtl">
+											<div class="panel-body no-padding no-border no-margin">
+												<div class="table-responsive border-1 margin-left-1 margin-right-1">
+													<table ng-table="tableParamsExRepair" class="table" ng-class="isMobileDevice === true ? 'text-small' : ''">
+														<tbody ng-repeat="p in $data">
+															<tr id="tr{{p.asset_code + p.ex_re_seq}}">
+																<td class="rowTd padding-4" data-title="'자산번호'" sortable="'asset_code'">{{p.asset_code}}</td>
+																<!--td class="rowTd padding-4" data-title="'SEQ'"      sortable="'ex_re_seq'">{{p.ex_re_seq}}</td-->
+																<td class="rowTd padding-4" data-title="'요청일자'" sortable="'ex_re_req_date'">{{p.ex_re_req_date}}</td>
+																<!--td class="rowTd padding-4" data-title="'요청구분'" sortable="'ex_re_req_flag'">{{p.ex_re_req_flag}}</td-->
+																<td class="rowTd padding-4" data-title="'제목'"     sortable="'req_subject'">{{p.req_subject}}</td>
+																<!--td class="rowTd padding-4" data-title="'요청내역'" sortable="'req_desc'">{{p.req_desc}}</td-->
+																<td class="rowTd padding-4" data-title="'요청자'"   sortable="'ex_re_requester'">{{p.ex_re_requester}}</td>
+																<td class="rowTd padding-4" data-title="'처리구분'" sortable="'ex_re_proc_flag'">{{p.ex_re_proc_flag}}</td>
+																<td class="rowTd padding-4" data-title="'처리일자'" sortable="'ex_re_date'">{{p.ex_re_date}}</td>
+																<td class="rowTd padding-4" data-title="'처리내역'" sortable="'ex_re_desc'">{{p.ex_re_desc}}</td>
+																<!--td class="rowTd padding-4" data-title="'처리비용'" sortable="'ex_re_cost'">{{p.ex_re_cost}}</td-->
+																<td class="rowTd padding-4" data-title="'처리자'"   sortable="'ex_re_charger'">{{p.ex_re_charger}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>

@@ -1,0 +1,62 @@
+/* ---------------------------------------------------------------------- */
+/* angular-carousel로 sliding 가능한 메뉴구조 생성을 위한 css
+/* ---------------------------------------------------------------------- */
+  .carousel-main {
+      width:100%;
+      height:999px; /* 필수 */
+      margin-top:0px;
+      display:inline-block;
+      text-align: left;
+  }
+  .custom-indicator span {
+    background: white;
+    transition: all 0.3s ease-out;
+  }
+
+  ul[rn-carousel] > li {
+    overflow: hidden; /* overflow: visible; visible로 하면 페이지 오른쪽 부분이 잘림 */
+  }
+
+  div.custom-indicator span {
+    color: seagreen !important; 
+    font-size: 12px !important;
+    /*color: royalblue !important;*/
+  }
+
+  .custom-indicator span.active {
+    /*color:firebrick !important;*/
+    color:orangered !important;
+    /*color:orange !important;*/
+    /*border-left: 1px solid;
+    border-bottom: 1px solid;*/
+    font-size: 16px !important;
+    /*background-color: blue !important; color:white;*/
+  }
+
+  .custom_menu_span{
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  .custom_menu_hr{
+    margin-top: 1px;
+    margin-bottom: 5px;
+    border-color:burlywood;
+  }
+  ul[rn-carousel] {
+      width:100%;
+      height:100%;
+      margin: 0 auto;
+  }
+  .carousel_li li {
+      width:100%;
+      height:100%;
+  }
+  .carousel-main-fullscreen {
+    width:100%;
+    height:100%;
+  }
+  .carousel-main-fullscreen ul[rn-carousel] {
+    width:100%;
+    height:100%;
+  }
+  

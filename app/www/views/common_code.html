@@ -1,0 +1,203 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 공통코드
+ * File          : common_code.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="common_code.app.TITLE">Common Code</h1>
+      <span class="mainDescription" translate="common_code.app.DESC"> Information of 공통코드</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="CommonCodeCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'common_code.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-red">Current page: {{ gridApi.pagination.getPage() }} of {{ gridApi.pagination.getTotalPages() }}</p>
+      <div id="grid1"
+        class="grid"
+        ui-grid="gridOptions"
+        ui-grid-pagination
+        ui-grid-pinning
+        ui-grid-selection
+        ui-grid-move-columns
+        ui-grid-exporter
+        ng-swipe-left="gridApi.pagination.previousPage()"
+        ng-swipe-right="gridApi.pagination.nextPage()">
+      </div>
+      <button type="button" class="btn btn-xs btn-success" ng-click="gridApi.pagination.previousPage()">Previous</button>
+      <button type="button" class="btn btn-xs btn-success" ng-click="gridApi.pagination.nextPage()">Next</button>
+      <!-- <button type="button" class="btn btn-success" ng-click="gridApi.pagination.seek(3)">go to page 3</button> -->
+
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="common_code_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.code_type" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <input type="hidden" mg-model="myform.lang" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <input type="hidden" mg-model="myform.code" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="common_code.app.TITLE"> Common Code</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.code_type.$dirty && Form.code_type.$invalid, 'has-success':Form.code_type.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'common_code.field.CODE_TYPE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'common_code.field.CODE_TYPE' | translate }}" class="form-control" name="code_type" ng-model="myform.code_type" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.code_type.$dirty && Form.code_type.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'common_code.field.CODE_TYPE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code_type.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'common_code.field.CODE_TYPE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code_type.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'common_code.field.CODE_TYPE', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.lang.$dirty && Form.lang.$invalid, 'has-success':Form.lang.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'common_code.field.LANG' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="lang" name="lang" ng-model="myform.lang" required>
+                      <ui-select-match placeholder="{{ 'common_code.field.LANG' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in language_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.lang = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.lang.$dirty && Form.lang.$invalid"> {{'common.message.CHECKED' | translate:{obj:'common_code.field.LANG'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.code.$dirty && Form.code.$invalid, 'has-success':Form.code.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'common_code.field.CODE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'common_code.field.CODE' | translate }}" class="form-control" name="code" ng-model="myform.code" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.code.$dirty && Form.code.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'common_code.field.CODE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'common_code.field.CODE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'common_code.field.CODE', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.code_desc.$dirty && Form.code_desc.$invalid, 'has-success':Form.code_desc.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'common_code.field.CODE_DESC' | translate }} </label>
+                  <input type="text" placeholder="{{ 'common_code.field.CODE_DESC' | translate }}" class="form-control" name="code_desc" ng-model="myform.code_desc" ng-minlength="1" ng-maxlength="100" required />
+                  <span class="error text-small block" ng-if="Form.code_desc.$dirty && Form.code_desc.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'common_code.field.CODE_DESC'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code_desc.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'common_code.field.CODE_DESC', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.code_desc.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'common_code.field.CODE_DESC', val:'100'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.status.$dirty && Form.status.$invalid, 'has-success':Form.status.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'common_code.field.STATUS' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="status" name="status" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.status"  />
+                    <label for="status" translate="common.code.USE"> Use </label>
+                    <span class="error text-small block" ng-if="Form.status.$dirty && Form.status.$error.required"> {{'common.message.CHECKED' | translate:{obj:'common_code.field.STATUS'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'common_code.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'common_code.field.REMARKS'} }} </span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

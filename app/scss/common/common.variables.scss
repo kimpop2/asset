@@ -1,0 +1,24 @@
+// Images - Preload images
+$pre-img-bg: rgba(lighten(#666666, 15%), .25);
+// Images - Preload images - Spinner on load
+$spinner-size: 50px;
+$spinner-svg-size: 28px;
+$spinner-color: #FFFFFF;
+// Images - Multimedia background
+//$multi-bg: darken(#666666, 30%);
+$multi-bg: darken(#ffffff, 10%);
+$overlay-bg: darken(#fcfcfc, 30%);
+
+$pre-img-ratios: ();
+
+// App colors
+//$top-bar-bg: $theme-color-2;
+$top-bar-bg: #464646;
+$top-bar-color: #FFFFFF;
+
+$loading-color: #FFFFFF;
+$loading-background-color: rgba(#444444, .9);
+
+//$content-bg: #EAEAEA;
+$content-bg: #fafafa;
+$content-color: #444444;

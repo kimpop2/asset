@@ -1,0 +1,214 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 사용자
+ * File          : asset_user.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="asset_user.app.TITLE">Asset User</h1>
+      <span class="mainDescription" translate="asset_user.app.DESC"> Information of 사용자</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="AssetUserCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'asset_user.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="asset_user_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.user_id" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="asset_user.app.TITLE"> Asset User</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.user_id.$dirty && Form.user_id.$invalid, 'has-success':Form.user_id.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.USER_ID' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_user.field.USER_ID' | translate }}" class="form-control" name="user_id" ng-model="myform.user_id" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.user_id.$dirty && Form.user_id.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.USER_ID'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_id.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_user.field.USER_ID', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_id.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_user.field.USER_ID', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.user_name.$dirty && Form.user_name.$invalid, 'has-success':Form.user_name.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.USER_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_user.field.USER_NAME' | translate }}" class="form-control" name="user_name" ng-model="myform.user_name" ng-minlength="1" ng-maxlength="100" required />
+                  <span class="error text-small block" ng-if="Form.user_name.$dirty && Form.user_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.USER_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_user.field.USER_NAME', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_user.field.USER_NAME', val:'100'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.user_pwd.$dirty && Form.user_pwd.$invalid, 'has-success':Form.user_pwd.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.USER_PWD' | translate }} </label>
+                  <input type="password" placeholder="{{ 'asset_user.field.USER_PWD' | translate }}" class="form-control" name="user_pwd" ng-model="myform.user_pwd" ng-minlength="1" ng-maxlength="100" required />
+                  <span class="error text-small block" ng-if="Form.user_pwd.$dirty && Form.user_pwd.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.USER_PWD'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_pwd.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_user.field.USER_PWD', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.user_pwd.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_user.field.USER_PWD', val:'100'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.user_role.$dirty && Form.user_role.$invalid, 'has-success':Form.user_role.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_user.field.USER_ROLE' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="user_role" name="user_role" ng-model="myform.user_role" >
+                      <ui-select-match placeholder="{{ 'asset_user.field.USER_ROLE' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in user_role_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.user_role = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.user_role.$dirty && Form.user_role.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_user.field.USER_ROLE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.phone.$dirty && Form.phone.$invalid, 'has-success':Form.phone.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.PHONE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_user.field.PHONE' | translate }}" class="form-control" name="phone" ng-model="myform.phone" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.phone.$dirty && Form.phone.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.PHONE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.phone.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_user.field.PHONE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.phone.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_user.field.PHONE', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.email.$dirty && Form.email.$invalid, 'has-success':Form.email.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.EMAIL' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_user.field.EMAIL' | translate }}" class="form-control" name="email" ng-model="myform.email" ng-minlength="1" ng-maxlength="80" required />
+                  <span class="error text-small block" ng-if="Form.email.$dirty && Form.email.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.EMAIL'} }} </span>
+                  <span class="error text-small block" ng-if="Form.email.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_user.field.EMAIL', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.email.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_user.field.EMAIL', val:'80'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.lang.$dirty && Form.lang.$invalid, 'has-success':Form.lang.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_user.field.LANG' | translate }} </label>
+                  <div class="clip-radio radio-primary">
+                    <input type="radio" id="lang-Y" name="lang" value="Y" ng-model="myform.lang" required />
+                    <label for="lang-Y" translate="">  </label>
+                    <input type="radio" id="lang-N" name="lang" value="N" ng-model="myform.lang" required />
+                    <label for="lang-N" translate="">  </label>
+                    <span class="error text-small block" ng-if="Form.lang.$dirty && Form.lang.$error.required"> {{'common.message.SELECTED' | translate:{obj:'asset_user.field.LANG'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.status.$dirty && Form.status.$invalid, 'has-success':Form.status.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_user.field.STATUS' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="status" name="status" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.status"  />
+                    <label for="status" translate="common.code.USE"> Use </label>
+                    <span class="error text-small block" ng-if="Form.status.$dirty && Form.status.$error.required"> {{'common.message.CHECKED' | translate:{obj:'asset_user.field.STATUS'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_user.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_user.field.REMARKS'} }} </span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

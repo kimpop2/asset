@@ -1,0 +1,222 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 장비폐기
+ * File          : asset_disuse.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="asset_disuse.app.TITLE">Asset Disuse</h1>
+      <span class="mainDescription" translate="asset_disuse.app.DESC"> Information of 장비폐기</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="AssetDisuseCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'asset_disuse.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="asset_disuse_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.asset_code" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <input type="hidden" mg-model="myform.disuse_seq"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="asset_disuse.app.TITLE"> Asset Disuse</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.asset_code.$dirty && Form.asset_code.$invalid, 'has-success':Form.asset_code.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_disuse.field.ASSET_CODE' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="asset_code" name="asset_code" ng-model="myform.asset_code" required>
+                      <ui-select-match placeholder="{{ 'asset_disuse.field.ASSET_CODE' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in asset_master_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.asset_code = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.asset_code.$dirty && Form.asset_code.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_disuse.field.ASSET_CODE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.disuse_date.$dirty && Form.disuse_date.$invalid, 'has-success':Form.disuse_date.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_disuse.field.DISUSE_DATE' | translate }} </label>
+                  <p class="input-group">
+                    <input type="text" id="myform.disuse_date" name="disuse_date" placeholder="{{ 'asset_disuse.field.DISUSE_DATE' | translate }}" ng-model="myform.disuse_date" ng-click="disuse_date.open = true"
+                      class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-append-to-body="false" close-text="Close"
+                      is-open="disuse_date.open" min-date="disuse_date.min" max-date="disuse_date.max" datepicker-options="disuse_date.options" required />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="disuse_date.open = true">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+                    </p>
+                  <span class="error text-small block" ng-if="Form.disuse_date.$dirty && Form.disuse_date.$invalid"> {{'common.message.CALENDAR' | translate:{obj:'asset_disuse.field.DISUSE_DATE'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.disuse_reason.$dirty && Form.disuse_reason.$invalid, 'has-success':Form.disuse_reason.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_disuse.field.DISUSE_REASON' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="disuse_reason" name="disuse_reason" ng-model="myform.disuse_reason" required>
+                      <ui-select-match placeholder="{{ 'asset_disuse.field.DISUSE_REASON' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in disuse_reason_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.disuse_reason = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.disuse_reason.$dirty && Form.disuse_reason.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_disuse.field.DISUSE_REASON'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.disuse_desc.$dirty && Form.disuse_desc.$invalid, 'has-success':Form.disuse_desc.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_disuse.field.DISUSE_DESC' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_disuse.field.DISUSE_DESC' | translate }}" class="form-control" name="disuse_desc" ng-model="myform.disuse_desc" ng-minlength="0" ng-maxlength="250"  />
+                  <span class="error text-small block" ng-if="Form.disuse_desc.$dirty && Form.disuse_desc.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_disuse.field.DISUSE_DESC'} }} </span>
+                  <span class="error text-small block" ng-if="Form.disuse_desc.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_disuse.field.DISUSE_DESC', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.disuse_desc.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_disuse.field.DISUSE_DESC', val:'250'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.disuse_charger.$dirty && Form.disuse_charger.$invalid, 'has-success':Form.disuse_charger.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'asset_disuse.field.DISUSE_CHARGER' | translate }} </label>
+                  <div class="input-group">
+                    <ui-select id="disuse_charger" name="disuse_charger" ng-model="myform.disuse_charger" required>
+                      <ui-select-match placeholder="{{ 'asset_disuse.field.DISUSE_CHARGER' | translate }}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="item.code as item in asset_user_list | filter: $select.search">
+                        <div ng-bind-html="item.name | highlight: $select.search"></div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                      <button ng-click="myform.disuse_charger = undefined" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
+                    </span>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.disuse_charger.$dirty && Form.disuse_charger.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_disuse.field.DISUSE_CHARGER'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.file_key.$dirty && Form.file_key.$invalid, 'has-success':Form.file_key.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_disuse.field.FILE_KEY' | translate }} </label>
+                  <input type="text" placeholder="{{ 'asset_disuse.field.FILE_KEY' | translate }}" class="form-control" name="file_key" ng-model="myform.file_key" ng-minlength="0" ng-maxlength="50"  />
+                  <span class="error text-small block" ng-if="Form.file_key.$dirty && Form.file_key.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_disuse.field.FILE_KEY'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_disuse.field.FILE_KEY', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.file_key.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_disuse.field.FILE_KEY', val:'50'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'asset_disuse.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_disuse.field.REMARKS'} }} </span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

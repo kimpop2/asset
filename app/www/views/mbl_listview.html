@@ -1,0 +1,398 @@
+<style>
+/*a, a:focus, a:hover, a:active {
+  outline: 0 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  color: dimgray;
+}*/
+
+.inbox .email-reader {
+  height: 100%;
+  margin-left: 240px; /* margin-left: 600px; */
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  background: #ffffff;
+}
+
+.inbox .email-list {
+  width: 100% !important; /* width: 360px !important; */
+  border-right: 1px solid #dee5e7;
+  background: #ffffff;
+}
+
+.inbox .wrap-list {
+  width: 100%; /* width: 359px; */
+  height: 100% !important;
+  position: relative; /* position: relative */
+}
+
+.messages-list .messages-item span {
+  color: #000000; /* color: #007AFF; */
+  display: block;
+}
+
+.messages-list .messages-item:hover {
+  background-color: white;
+  cursor: default !important; /* cursor: pointer !important; */
+}
+
+.messages-list .messages-item {
+  padding: 5px 15px 5px 15px; /* padding: 5px 15px 5px 25px; */
+}
+
+</style>
+<!-- start: List -->
+<div ct-fullheight data-ct-fullheight-exclusion="header, footer">
+	<div class="row" style="height:100%">
+		<div class="col-md-12 padding-left-15 padding-right-5" style="height:100%;background-color:white;">
+
+			<!-- 메뉴설정 -->
+			<!-- /// controller:  'AssetDetailMenuCrtl' -  localtion: js/controllers/assetListCtrl.js /// -->
+			<div class="carousel-main bg-white" ng-controller="MblListViewCtrl" style="height:100%;margin-top:5px;">
+        <div class="custom-indicator rn-carousel-indicator custom_menu_span">
+            <span
+            		ng-repeat="menu in slideCarouselMenu"
+                ng-class="{active: $index==$parent.carouselIndexNum}"
+                ng-click="$parent.carouselIndexNum = $index">&nbsp;<i class="{{menu.menuIcon}}"></i>&nbsp;{{menu.menuTitle}}&nbsp;
+              </span>
+            <hr class="custom_menu_hr">
+        </div>
+				<!--
+				rn-carousel-index="carouselIndexNum"
+				rn-carousel-buffered
+				rn-carousel-pause-on-hover
+				rn-carousel-auto-slide
+				rn-carousel-transition="hexagon"
+				rn-carousel-control
+				-->
+        <ul rn-carousel
+            rn-carousel-index="carouselIndexNum"
+            rn-carousel-control
+            class="carousel_li">
+            <!-- 메뉴별 화면: <li> tag와 메뉴 건수가 일치해야 함 -->
+            <li>
+							<!-- /// controller:  'MblListViewCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-primary btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-primary btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'asset_code' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.asset_code }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.asset_code }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.acquisition_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.asset_name }}</span>
+													<span class="messages-item-content">[관리부서] {{ message.cost_center_code }}</span>
+													<span class="messages-item-content">[관리자(정)] {{ message.main_mgr_no | htmlToPlaintext | words:15 :true }}</span>
+													<span class="messages-item-content">[관리자(부)] {{ message.sub_mgr_no  | htmlToPlaintext | words:15 :true }}</span>
+													<span class="messages-item-content">[비고사항] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+            <li>
+							<!-- /// controller:  'MblListViewCategoryCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewCategoryCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-blue btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-blue btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'asset_code' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.asset_code }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.asset_cat_code }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.creation_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.asset_cat_name }}</span>
+													<span class="messages-item-content">[비고사항] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+            <li>
+							<!-- /// controller:  'MblListViewCostCenterCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewCostCenterCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-azure btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-azure btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'cost_center_code' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.cost_center_code }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.cost_center_code }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.creation_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.cost_center_name }}</span>
+													<span class="messages-item-content">[비고사항] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+            <li>
+							<!-- /// controller:  'MblListViewInstallAreaCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewInstallAreaCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-light-red btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-light-red btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'install_area_code' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.install_area_code }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.install_area_code }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.creation_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.install_area_name }}</span>
+													<span class="messages-item-content">[비고사항] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+            <li>
+							<!-- /// controller:  'MblListViewUserCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewUserCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-beige btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-beige btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'user_id' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.user_id }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.user_id }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.creation_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.user_name }}</span>
+													<span class="messages-item-content">[전화번호] {{ message.phone }}</span>
+													<span class="messages-item-content">[메일주소] {{ message.email | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+            <li>
+							<!-- /// controller:  'MblListViewCommonPartCtrl' -  localtion: js/mblListViewCtrl.js /// -->
+							<div class="inbox" id="inbox" ng-controller="MblListViewCommonPartCtrl" toggleable active-class="message-open">
+								<div class="col email-list">
+									<div class="wrap-list">
+										<div class="wrap-options" id="wrap-options" toggleable active-class="search-open">
+											<div class="messages-options padding-15">
+												<button class="btn btn-orange btn-transparent pull-right open-message-search" ct-toggle="on" target="wrap-options">
+													<i class="ti-search"></i>
+												</button>
+												<button class="btn btn-orange btn-transparent pull-right close-message-search" ct-toggle="off" target="wrap-options" ng-click="inbox.search = {}">
+													<i class="ti-close"></i>
+												</button>
+											</div>
+											<div class="messages-search">
+												<form>
+													<input type="text" class="form-control underline" placeholder="검색어를 입력하세요..." ng-model="inbox.search.$">
+												</form>
+											</div>
+										</div>
+										<ul class="messages-list" perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true">
+											<li ng-if="!messages.length">
+												<div class="no-messages" style="top:7%">
+													<h2>No data found.</h2>
+												</div>
+											</li>
+											<li class="messages-item"
+						            ng-class="{starred: message.starred}"
+												ng-repeat="message in messages | orderBy: 'part_no' | filter:filters | filter:inbox.search">
+												<a message-item="{{message.id}}" href>
+													<!-- <span title="{{ 'Mark as starred' }}"
+													  class="messages-item-star"
+													  ng-init="message.starred = true"
+													  ng-click="message.starred = !message.starred">
+													    <i class="fa fa-star"></i>
+													</span> -->
+													<img alt="{{ message.part_no }}"
+													  ng-src="{{ message.avatar && message.avatar || noAvatarImg }}"
+													  class="messages-item-avatar bordered border-primary">
+													<span class="messages-item-from">{{ message.part_no }}</span>
+													<div class="messages-item-time">
+														<span class="text">{{ message.creation_date | date: "yyyy-MM-dd" }}</span>
+													</div>
+													<span class="messages-item-subject">{{ message.part_name }}</span>
+													<span class="messages-item-content">[규격] {{ message.part_spec }}</span>
+													<span class="messages-item-content">[비고] {{ message.remarks | htmlToPlaintext | words:15 :true }}</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+            </li>
+        </ul>
+      </div>
+		</div>
+	</div>
+
+
+</div>
+<!-- end: MESSAGES -->

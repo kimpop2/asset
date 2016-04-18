@@ -1,0 +1,149 @@
+.asset-view
+{
+	background-color: $content-bg !important;
+	color: #f44;
+
+	/**
+	 * 목록에 적용하는 스타일 
+	 */
+
+	// 아이템 목록에서 기본패딩을 제거한다.
+	.asset-item .item-content {
+	  padding: 0 0 0 5px !important;
+	}
+
+	// 그리드의 행간 패딩을 설정한다.
+	.row-list-padding {
+	  padding: 0; 
+	}
+	.row-list-padding > .col {
+	    padding: 0 0 7px 0; 
+	}
+	// 마지막 행은 아래 패딩을 제거한다.
+	.row-list-padding:last-child .col{
+	  	padding: 0; 
+	}
+	
+	/**
+	 * 외곽선이 있는 그리드 (테이블, 박스)를 만들때 적용하는 스타일
+	 * 외곽선은 .col 에 적용되도록 스타일을 작성한다. 
+	 */
+
+	.box{
+		// 기본설정
+		// .box 내부에 사용하는 모든 것은 우선 이 스타일의 적용을 받는다.
+		border-color: #ddd;
+	    background-color: #fff;
+	    font-size: 1.063em;
+		text-align: center;
+
+		// 프로그램 제목
+		.caption .col {
+		    background-color: #fefefe;
+		    color: #444;
+		    font-size: 1.125em;
+		    font-weight: bold;
+		    padding:5px 0 0;
+		}
+
+		// row class 에 적용하는 스타일
+		// 전체행에 스타일이 적용된다.
+		.title .col {
+		    background-color: #ddd;
+		    font-weight: bold;
+		}
+		
+		// 목록 헤더용으로 전체행에 스타일이 적용된다. 
+		.header .col {
+		    background-color: lightgray;
+		    font-weight: bold;
+		}
+		
+		// 합계 등 강조할 행에 스타일이 적용된다.
+		.sum .col {
+		    background-color: #efefef;
+		    font-weight: bold;
+		}
+		
+		// 메시지에 스타일이 적용된다.
+		.message .col {
+		    background-color: #efefef;
+		    color: #f44;
+		}
+		
+		// 컬럼에 공통으로 적용할 스타일로 컬럼 왼쪽과 윗쪽에 외곽선 그린다.
+		.col {
+		    border: solid 1px #bbb;
+		    border-bottom-style: none;
+		    border-right-style: none;
+		}
+		
+		// 컬럼 왼쪽의 외곽선을 그리지 않으므로써 컬럼을 합치는 효과
+		.col.append{
+			border-left: none;
+		}
+		
+		// 마지막 컬럼은 오른쪽에 외곽선을 그린다.
+		.col:last-child {
+		    border-right: solid 1px grey;
+		}
+		
+		// 마지막 행은 아래쪽에 외곽선을 그린다.
+		.row:last-child .col{
+		    border-bottom: solid 1px grey;
+		}
+		
+		// 컬럼 윗쪽에 외곽선을 그리지 않으므로써 행을 합치는 효과
+		.row.append .col{
+			border-top-style: none;
+		}
+	}
+
+	/**
+	 * 자료 출력용 포맷
+	 */
+	
+	// 타이틀 굵게
+	.data-title {
+	   font-weight: bold;
+	}
+	
+	// 라벨은 데이터와 가깝게 오른쪽으로 정렬
+	.data-label {
+	   font-weight: bold;
+	   text-align:  right;
+	}
+	
+	// 일반 자료 중앙정렬
+	.data-text {
+		text-align: center;
+	}
+	
+	// 왼쪽정렬 자료
+	// .col 에서 append 속성을 추가해서 단위를 표시할 때 사용하면 좋다.
+	.data-left {
+		text-align: left;
+	}	
+	
+	// 오른쪽정렬 자료 주로 숫자를 표시할 때 사용한다.
+	.data-right {
+		text-align: right;
+	}
+	
+	// 긴 자료를 표시할 때 행넘김 없이 표시한다.
+	.data-desc {
+		text-align: left;
+	}
+	
+	/**
+	 * 스크롤 영역
+	 */
+	.vc-scroll{
+	  height:250px;
+	  position: absolute;
+	  top: 323px;
+	  left: 0;
+	  right: 0;
+	}
+	
+}

@@ -1,0 +1,51 @@
+<style>
+@media (max-width: 480px) {
+  .message-actions .actions > li {
+    display: inline-block; /* display: none; */
+  }
+}
+</style>
+<div class="container-fluid container-fullw bg-white padding-top-5 padding-bottom-5">
+	<div class="row">
+		<div class="col-md-12">
+			<a ui-sref="app.mobile_asset.mbl_listview">
+				<span class="text-bold text-extra-large" style="color:orangered">
+					<i class="fa fa-angle-left"></i> Back
+				</span>
+			</a>
+		</div>
+	</div>
+	<div class="row" ng-swipe-left="goListItem()" ng-swipe-right="goListItem()">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-white" id="panelAttachImage">
+						<div class="panel-heading border-light panel-blue">
+							<h4 class="panel-title">첨부파일</h4>
+							<ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="load1"></ct-paneltool>
+						</div>
+						<div class="panel-body">
+							<div uib-collapse="panelAttachImage" ng-init="panelAttachImage=false" class="panel-wrapper">
+								<!--Carousel 설정 -->
+								<div>
+								  <div>
+										<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+										  <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+												<img ng-src="{{slide.image}}" style="margin:auto;">
+												<div class="carousel-caption">
+												  <h4>Slide {{slide.id}}</h4>
+												  <p>{{slide.text}}</p>
+												</div>
+										  </uib-slide>
+										</uib-carousel>
+								  </div>
+								</div>
+								<!-- Carousel -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

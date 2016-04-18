@@ -1,0 +1,198 @@
+<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 자산신고
+ * File          : mobile_asset_request.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<!-- <section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="mobile_asset_request.app.TITLE">Mobile Asset Request</h1>
+      <span class="mainDescription" translate="mobile_asset_request.app.DESC"> Information of Mobile Asset Request</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section> -->
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw bg-white" ng-controller="MobileAssetRequestCtrl">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-white text-center" style="border-color: lightgray; border-top-width: 1px;border-right-width: 1px;border-bottom-width: 1px;border-left-width: 1px;">
+				<div class="panel-body">
+					<a href="#" ng-click="scanBarcode()">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-barcode fa-stack-1x fa-inverse"></i> </span>
+						<h5 class="StepTitle">Scan</h5>
+						<p class="text-extra-small">
+							바코드 및 QR코드는 Scan 버튼 클릭하고<br> NFC인 경우는 그냥 태그합니다
+						</p>
+					</a>
+				</div>
+			</div>
+	  </div>
+	</div>
+  <div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-white">
+				<!-- <div class="panel-heading border-light panel-blue">
+					<h5 class="panel-title">자산신고</h5>
+				</div> -->
+				<div class="panel-body">
+	        <form name="Form" id="form1" role="form" class="form-horizontal" novalidate>
+	          <input type="hidden" mg-model="myform.object_id"   />
+	          <input type="hidden" mg-model="myform.write_by"    />
+	          <input type="hidden" mg-model="myform.request_seq" />
+
+            <fieldset class="bg-white">
+              <legend translate="mobile_asset_request.app.TITLE">Asset Request</legend>
+
+	            <!-- 자산코드 -->
+	            <div class="form-group" style="margin-bottom: 10px;"
+	            	ng-class="{'has-error':Form.asset_code.$dirty && Form.asset_code.$invalid, 'has-success':Form.asset_code.$valid}">
+	              <label class="control-label"><span class="symbol required"></span> 대상자산</label>
+	              <div class="input-group">
+	                <ui-select id="asset_code" name="asset_code" ng-model="myform.asset_code" ng-change="loadAssetData(myform.asset_code)" required>
+	                  <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+	                  <ui-select-choices repeat="item.code as item in asset_master_list | filter: $select.search">
+	                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+	                  </ui-select-choices>
+	                </ui-select>
+	                <span class="input-group-btn">
+	                  <button ng-click="myform.asset_code = undefined" class="btn btn-default">
+	                    <span class="glyphicon glyphicon-trash"></span>
+	                  </button>
+	                </span>
+	              </div>
+	              <span class="error text-small block" ng-if="Form.asset_code.$dirty && Form.asset_code.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_move.field.ASSET_CODE'} }} </span>
+	            </div>
+
+	            <!-- 자산분류 -->
+	            <div class="form-group" style="margin-bottom: 10px;">
+	            <label class="control-label">자산분류</label>
+	              <input type="text" placeholder="" class="form-control input-sm" name="asset_cat_name" ng-model="myform.asset_cat_name" ng-minlength="1" ng-maxlength="150" readonly />
+	            </div>
+
+	            <!-- 관리부서 -->
+	            <div class="form-group" style="margin-bottom: 10px;">
+	            <label class="control-label">관리부서</label>
+	              <input type="text" placeholder="" class="form-control input-sm" name="cost_center_name" ng-model="myform.cost_center_name" ng-minlength="1" ng-maxlength="150" readonly />
+	            </div>
+
+	            <!-- 기본설치장소 -->
+	            <div class="form-group" style="margin-bottom: 10px;">
+	              <label class="control-label">현재위치</label>
+	              <input type="text" placeholder="" class="form-control input-sm" name="install_area_name" ng-model="myform.install_area_name" ng-minlength="1" ng-maxlength="150" readonly />
+	            </div>
+
+							<br>
+	            <!-- 요청구분 -->
+							<div class="form-group" style="margin-top: 1px; margin-bottom: 1px;">
+	              <label class="control-label"><span class="symbol required"></span>요청구분</label>
+								<div class="form-group" align="left">
+									<div class="clip-radio radio-primary no-margin">
+										&nbsp;&nbsp;&nbsp;
+										<input type="radio" id="p_r01" name="request_flag" ng-model="myform.request_flag" value="R01" ng-click="myform.req_subject='고장신고'">
+										<label for="p_r01">
+											고장신고
+										</label>
+										<input type="radio" id="p_r02" name="request_flag" ng-model="myform.request_flag" value="R02" ng-click="myform.req_subject='교환수리'">
+										<label for="p_r02">
+											교환수리
+										</label>
+									</div>
+								</div>
+							</div>
+
+	            <!-- 신고일자 -->
+              <div class="form-group" style="margin-bottom: 10px;"
+              	ng-class="{'has-error':Form.request_date.$dirty && Form.request_date.$invalid, 'has-success':Form.request_date.$valid}" >
+                <label class="control-label"><span class="symbol required"></span>신고일자</label>
+                <p class="input-group">
+                  <input type="text" id="myform.request_date" name="request_date" placeholder="" ng-model="myform.request_date" ng-click="request_date.open = true"
+                    class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-append-to-body="false" close-text="Close"
+                    is-open="request_date.open" min-date="request_date.min" max-date="request_date.max" datepicker-options="request_date.options" required />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="request_date.open = true">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                  </p>
+                <span class="error text-small block" ng-if="Form.request_date.$dirty && Form.request_date.$invalid"> {{'common.message.CALENDAR' | translate:{obj:'asset_request.field.REQUEST_DATE'} }} </span>
+              </div>
+
+	            <!-- 요청자 -->
+	            <div class="form-group" style="margin-bottom: 10px;"
+	            	ng-class="{'has-error':Form.request_charger.$dirty && Form.request_charger.$invalid, 'has-success':Form.request_charger.$valid}" >
+	              <label class="control-label"><span class="symbol required"></span> 요청자</label>
+	              <div class="input-group">
+	                <ui-select id="request_charger" name="request_charger" ng-model="myform.request_charger" required>
+	                  <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+	                  <ui-select-choices repeat="item.code as item in asset_user_list | filter: $select.search">
+	                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+	                  </ui-select-choices>
+	                </ui-select>
+	                <span class="input-group-btn">
+	                  <button ng-click="myform.request_charger = undefined" class="btn btn-default">
+	                    <span class="glyphicon glyphicon-trash"></span>
+	                  </button>
+	                </span>
+	              </div>
+	              <span class="error text-small block" ng-if="Form.request_charger.$dirty && Form.request_charger.$invalid"> {{'common.message.CHECKED' | translate:{obj:'asset_move.field.REQUEST_CHARGER'} }} </span>
+	            </div>
+
+
+	            <!-- 제목 -->
+              <div class="form-group" style="margin-bottom: 10px;"
+              	ng-class="{'has-error':Form.req_subject.$dirty && Form.req_subject.$invalid, 'has-success':Form.req_subject.$valid}" >
+                <label class="control-label"><span class="symbol required"></span>제목</label>
+                <input type="text" placeholder="" class="form-control" name="req_subject" ng-model="myform.req_subject" ng-minlength="1" ng-maxlength="255" required />
+                <span class="error text-small block" ng-if="Form.req_subject.$dirty && Form.req_subject.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_request.field.REQ_SUBJECT'} }} </span>
+                <span class="error text-small block" ng-if="Form.req_subject.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_request.field.REQ_SUBJECT', val:'1'} }} </span>
+                <span class="error text-small block" ng-if="Form.req_subject.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_request.field.REQ_SUBJECT', val:'255'} }} </span>
+              </div>
+
+	            <!-- 신고내용 -->
+              <div class="form-group" style="margin-bottom: 10px;"
+              	ng-class="{'has-error':Form.request_desc.$dirty && Form.request_desc.$invalid, 'has-success':Form.request_desc.$valid}" >
+                <label class="control-label"><span class="symbol required"></span>신고내용</label>
+								<textarea id="request_desc" name="request_desc" class="form-control autosize area-animated msd-elastic: \n;" data-ng-model="myform.request_desc" required></textarea>
+                <span class="error text-small block" ng-if="Form.request_desc.$dirty && Form.request_desc.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'asset_request.field.REQUEST_DESC'} }} </span>
+                <span class="error text-small block" ng-if="Form.request_desc.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'asset_request.field.REQUEST_DESC', val:'1'} }} </span>
+                <span class="error text-small block" ng-if="Form.request_desc.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'asset_request.field.REQUEST_DESC', val:'4000'} }} </span>
+              </div>
+
+	            <!-- 자산코드(barcode) -->
+	            <!-- <div class="form-group">
+	              <label class="control-label">Tag내용</label>
+	              <input type="text"
+	              	placeholder=""
+	              	class="form-control"
+	              	name="barcode"
+	              	ng-model="myform.barcode"
+	              />
+	            </div> -->
+
+							<!--pre class="margin-top-20">{{ myform | json }}</pre-->
+						</fieldset>
+					</form>
+				</div>
+			</div>
+      <div class="pull-right">
+        <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+          Submit
+        </button>
+        <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm()" translate="common.app.RESET">
+          Reset
+        </button>
+      </div>
+		</div>
+	</div>
+</div>

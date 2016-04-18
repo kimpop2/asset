@@ -1,0 +1,169 @@
+﻿<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : 코스트센타
+ * File          : cost_center.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="cost_center.app.TITLE">Cost Center</h1>
+      <span class="mainDescription" translate="cost_center.app.DESC"> Information of 코스트센타</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw" ng-controller="CostCenterCtrl">
+
+<div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-white" id="panelSearch">
+        <div class="panel-heading border-light">
+          <h4 class="panel-title text-small text-blue" translate="common.app.CONDITION">Search Condition</h4>
+          <ct-paneltool class="panel-tools" tool-collapse="tool-collapse" tool-refresh="reloadData()" ></ct-paneltool>
+        </div>
+        <div uib-collapse="panelSearch" ng-init="panelSearch=false" class="panel-wrapper">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p align="right">
+                  <a class="btn btn-primary btn-small" href="#" ng-click="insertForm()"><i class="ti-plus"></i> <span translate='common.app.NEW'>New</span> </a>
+                  <a class="btn btn-primary btn-small" href="#" ng-click="updateForm()"><i class="ti-pencil"></i> <span translate='common.app.EDIT'>Edit</span> </a>
+                  <a class="btn btn-warning btn-small" href="#" ng-click="deleteData()"><i class="ti-trash"></i> <span translate='common.app.DELETE'>Delete</span> </a>
+                  <a class="btn btn-success"           href="#" ng-click="reloadData()"><i class="ti-reload"></i> <span translate='common.app.RELOAD'>Reload</span> </a>
+                </p>
+              </div>
+            </div><!-- end row1 -->
+            <div class="row">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="text" name="filterValue" ng-model="filterValue" placeholder="{{ 'common.app.FILTER' | translate }}"
+                                     class="form-control ng-pristine ng-untouched ng-valid"
+                                     uib-tooltip="{{ 'cost_center.app.FILTER' | translate }}" tooltip-enable="!filterValue" tooltip-trigger="mouseenter" tooltip-placement="top" >
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-small" ng-click="searchData()">
+                      <i class="ti-search"></i>  <span translate='common.app.SEARCH'>Search</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div><!-- end row2 -->
+          </div><!-- end panel-body -->
+        </div><!-- end panel-wrapper -->
+      </div><!-- end panel -->
+    </div><!-- end col-sm-12 -->
+  </div><!-- end row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div id="grid1" class="grid" ui-grid="gridOptions" ui-grid-pinning ui-grid-selection ui-grid-move-columns ui-grid-exporter>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>
+
+
+<script type="text/ng-template" id="cost_center_aside.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+    <span ng-if="myform.txn_type === 'exec_madd'" translate="common.app.NEW"> New </span>
+    <span ng-if="myform.txn_type === 'exec_mupd'" translate="common.app.EDIT"> Edit </span>
+  </div><!-- end modal-header -->
+  <!-- start: FORM VALIDATION -->
+  <div class="modal-body bg-light-grey">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="Form" id="form1" novalidate >
+          <input type="hidden" mg-model="myform.object_id" />
+          <input type="hidden" mg-model="myform.write_by"  />
+          <input type="hidden" mg-model="myform.cost_center_code" ng-if="myform.txn_type === 'exec_mupd'"  />
+          <div class="row">
+            <fieldset class="bg-light-grey">
+              <legend translate="cost_center.app.TITLE"> Cost Center</legend>
+              <div class="col-md-6">
+
+                <div class="form-group" ng-class="{'has-error':Form.cost_center_code.$dirty && Form.cost_center_code.$invalid, 'has-success':Form.cost_center_code.$valid}" ng-if="myform.txn_type === 'exec_madd'" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'cost_center.field.COST_CENTER_CODE' | translate }} </label>
+                  <input type="text" placeholder="{{ 'cost_center.field.COST_CENTER_CODE' | translate }}" class="form-control" name="cost_center_code" ng-model="myform.cost_center_code" ng-minlength="1" ng-maxlength="40" required />
+                  <span class="error text-small block" ng-if="Form.cost_center_code.$dirty && Form.cost_center_code.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'cost_center.field.COST_CENTER_CODE'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_code.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'cost_center.field.COST_CENTER_CODE', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_code.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'cost_center.field.COST_CENTER_CODE', val:'40'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.cost_center_name.$dirty && Form.cost_center_name.$invalid, 'has-success':Form.cost_center_name.$valid}" >
+                  <label class="control-label"><span class="symbol required"></span>  {{'cost_center.field.COST_CENTER_NAME' | translate }} </label>
+                  <input type="text" placeholder="{{ 'cost_center.field.COST_CENTER_NAME' | translate }}" class="form-control" name="cost_center_name" ng-model="myform.cost_center_name" ng-minlength="1" ng-maxlength="150" required />
+                  <span class="error text-small block" ng-if="Form.cost_center_name.$dirty && Form.cost_center_name.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'cost_center.field.COST_CENTER_NAME'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_name.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'cost_center.field.COST_CENTER_NAME', val:'1'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_name.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'cost_center.field.COST_CENTER_NAME', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.cost_center_name_local.$dirty && Form.cost_center_name_local.$invalid, 'has-success':Form.cost_center_name_local.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'cost_center.field.COST_CENTER_NAME_LOCAL' | translate }} </label>
+                  <input type="text" placeholder="{{ 'cost_center.field.COST_CENTER_NAME_LOCAL' | translate }}" class="form-control" name="cost_center_name_local" ng-model="myform.cost_center_name_local" ng-minlength="0" ng-maxlength="150"  />
+                  <span class="error text-small block" ng-if="Form.cost_center_name_local.$dirty && Form.cost_center_name_local.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'cost_center.field.COST_CENTER_NAME_LOCAL'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_name_local.$error.minlength"> {{'common.message.MINLEN' | translate:{obj:'cost_center.field.COST_CENTER_NAME_LOCAL', val:'0'} }} </span>
+                  <span class="error text-small block" ng-if="Form.cost_center_name_local.$error.maxlength"> {{'common.message.MAXLEN' | translate:{obj:'cost_center.field.COST_CENTER_NAME_LOCAL', val:'150'} }} </span>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.status.$dirty && Form.status.$invalid, 'has-success':Form.status.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'cost_center.field.STATUS' | translate }} </label>
+                  <div class="checkbox clip-check check-primary">
+                    <input type="checkbox" id="status" name="status" ng-true-value="'Y'" ng-false-value="'N'" ng-model="myform.status"  />
+                    <label for="status" translate="common.code.USE"> Use </label>
+                    <span class="error text-small block" ng-if="Form.status.$dirty && Form.status.$error.required"> {{'common.message.CHECKED' | translate:{obj:'cost_center.field.STATUS'} }} </span>
+                  </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error':Form.remarks.$dirty && Form.remarks.$invalid, 'has-success':Form.remarks.$valid}" >
+                  <label class="control-label"><span class="symbol "></span>  {{'cost_center.field.REMARKS' | translate }} </label>
+                  <div class="note-editor">
+                    <textarea maxlength="4000" class="form-control limited" ng-model="myform.remarks"></textarea>
+                  </div>
+                  <span class="error text-small block" ng-if="Form.remarks.$dirty && Form.remarks.$error.required"> {{'common.message.REQUIRED' | translate:{obj:'cost_center.field.REMARKS'} }} </span>
+                </div>
+
+              </div><!-- end col-md-6 1 -->
+              <div class="col-md-6">
+              </div><!-- end col-md-6 2 -->
+            </fieldset>
+          </div><!-- end row 1 -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+                  Submit
+                </button>
+                <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm(Form)" translate="common.app.RESET">
+                  Reset
+                </button>
+                <button ng-if="myform.txn_type === 'exec_mupd'" type="submit" class="btn btn-danger" ng-click="deleteData(Form)" translate="common.app.DELETE">
+                  Delete
+                </button>
+                <button class="btn btn-primary" style="margin:5px;" ng-click="cancel()">
+                  <i class="ti-close"></i>  <span translate='common.app.CLOSE'>Close</span>
+                </button>
+              </div>
+            </div><!-- end row-md-12 -->
+          </div><!-- end row 2 -->
+          <!-- pre class="margin-top-20">{{ myform | json }}</pre -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- end: FORM VALIDATION -->
+  <div class="modal-footer">
+  </div>
+</script>
+

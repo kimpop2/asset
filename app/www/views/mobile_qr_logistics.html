@@ -1,0 +1,76 @@
+<!-- *********************************************************************
+ * Copyright (c) 2014, COPYRIGHTⓒ2014 eBiz-Pro. ALL RIGHTS RESERVED.
+ *
+ * Project       : (주)대동 연구소 자산관리
+ * Program Name  : QR Code Reader
+ * File          : mobile_qr_logistics.html
+ * Description   :
+ *                 리스트 / 입력폼 화면
+ * Author        :
+ * Creation Date :
+ * Creation Date :
+ * ******************************************************************** -->
+
+<!-- start: PAGE TITLE -->
+<section id="page-title" class="padding-top-20 padding-bottom-20">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1 class="mainTitle" translate="mobile_qr_logistics.app.TITLE">Mobile QR Code Reader</h1>
+      <span class="mainDescription" translate="mobile_qr_logistics.app.DESC"> Information of Mobile QR Code Reader</span>
+    </div>
+    <div ncy-breadcrumb></div>
+  </div>
+</section>
+<!-- end: PAGE TITLE -->
+<!-- start: PANEL WITH HEADING -->
+<div class="container-fluid container-fullw bg-white" ng-controller="MobileQrReaderCtrl">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-white text-center" style="border-color: lightgray; border-top-width: 1px;border-right-width: 1px;border-bottom-width: 1px;border-left-width: 1px;">
+				<div class="panel-body">
+					<a href="#" ng-click="scanBarcode()">
+						<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-success"></i> <i class="fa fa-barcode fa-stack-1x fa-inverse"></i> </span>
+						<h5 class="StepTitle">Scan</h5>
+						<p class="text-extra-small">
+							바코드나 QR Code를 읽으면 내용을 확인할 수 있습니다
+						</p>
+					</a>
+				</div>
+			</div>
+	  </div>
+	</div>
+  <div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-white">
+				<!-- <div class="panel-heading border-light panel-blue">
+					<h5 class="panel-title">Mobile QR Code Reader</h5>
+				</div> -->
+				<div class="panel-body">
+	        <form name="Form" id="form1" role="form" class="form-horizontal" novalidate>
+	          <input type="hidden" mg-model="myform.object_id" />
+	          <input type="hidden" mg-model="myform.write_by"  />
+            <fieldset class="bg-white">
+              <legend translate="mobile_qr_logistics.app.TITLE">QR Code Reader</legend>
+
+	            <!-- QR info -->
+              <div class="form-group" style="margin-bottom: 10px;">
+                <label class="control-label"></span>태그내용</label>
+								<textarea id="tag_info" rows="20" name="tag_info" class="form-control autosize area-animated msd-elastic: \n;" data-ng-model="myform.tag_info" readonly></textarea>
+              </div>
+
+							<!--pre class="margin-top-20">{{ myform | json }}</pre-->
+						</fieldset>
+					</form>
+				</div>
+			</div>
+      <!-- <div class="pull-right">
+        <button type="submit" class="btn btn-primary" ng-click="saveData(Form)" translate="common.app.SUBMIT">
+          Submit
+        </button>
+        <button type="reset" class="btn btn-primary btn-o" ng-click="resetForm()" translate="common.app.RESET">
+          Reset
+        </button>
+      </div> -->
+		</div>
+	</div>
+</div>

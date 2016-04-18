@@ -1,0 +1,750 @@
+{
+  "common" : {
+    "app" : {
+       "TITLE" : "Common Information"
+      ,"MENU"  : "Common Information"
+      ,"DESC"  : "About Common Information"
+      ,"HELP"  : "Help for Common Information"
+      ,"SEARCH": "{{data}} Search"
+      ,"PARAM" : "{{data}} Conditions"
+      ,"LIST"  : "{{data}} List"
+      ,"NEW"   : "{{data}} New"
+      ,"EDIT"  : "{{data}} Edit"
+      ,"DELETE": "{{data}} Delete"
+      ,"RELOAD": "{{data}} Refresh"
+      ,"RESET" : "Reset"
+      ,"CANCEL": "Cancel"
+      ,"SUBMIT": "Submit"
+      ,"OK"    : "OK"
+      ,"CLOSE" : "Close"
+    }
+    ,
+    "code" : {
+       "ASSET_PROC_FLAG" : "Asset Proc Flag"
+      ,"ASSET_REQ_FLAG"  : "Asset Request Flag"
+      ,"DISUSE_REASON"   : "Disuse Reason"
+      ,"EX_RE_PROC_FLAG" : "Exc. or Repair Flag"
+      ,"EX_RE_REQ_FLAG"  : "Exc. or Repair Requst Flag"
+      ,"FILE_FLAG"       : "File Flag"
+      ,"INSPECTION_FLAG" : "Inspection Object Flag"
+      ,"INSPECTION_UNIT" : "Inspection Priod"
+      ,"MOVE_TYPE"       : "Move Type Flag"
+      ,"SURVEY_RESULT"   : "Asset Survey Result"
+      ,"USE_STATUS"      : "Used Status"
+      ,"YES_NO"          : "Yes or Not"
+    }
+    ,
+    "message" : {
+       "REQUIRED": "{{field}} Field is required."
+      ,"SELECTED": "Please Select {{field}} Field."
+      ,"CHECKED" : "Please Check {{field}} Field."
+      ,"MINLEN"  : "Please Input Longer then {{minlen}} Charactors"
+      ,"MAXLEN"  : "Please Input Shorter then {{maxlen}} Charactors"
+      ,"MINVALUE": "Please Input Bigger then {{minvalue}}."
+      ,"MAXVALUE": "Please Input Smaller then {{maxvalue}}."
+      ,"MINDATE" : "Please Input the day After {{mindate}}."
+      ,"MAXDATE" : "Please Input the day Befor {{maxdate}}."
+      ,"NUMBER"  : "Please Input as Number."
+      ,"EMAIL"   : "Please Input as email."
+      ,"DATE"    : "Please Input as Date."
+      ,"CALENDAR": "Please Select on the Calendar."
+      ,"ERROR"   : "{{error}} Error Ocurred!"
+      ,"INVALID" : "It's invalid Value!"
+      ,"OK"                 : "{{ok}} Process Succeded."
+      ,"ERR_TXNTYPE"        : "{{txntype}} Request is Invalid!"
+      ,"ERR_DATA_EXIST"     : "{{data}} Record is Exist!"
+      ,"ERR_DATA_NOTFOUND"  : "{{data}} Record is Not Exist!"
+      ,"ERR_CODENAME_EXIST" : "{{codename}} Code Record is Exist!"
+      ,"ERR_UNKNOWN"        : "Unknown {{error}} Error is occurred!"
+    }
+    ,
+    "execute" : {
+       "EXEC_MADD"  : "{{master}} Insert"
+      ,"EXEC_MUDT"  : "{{master}} Update"
+      ,"EXEC_MDEL"  : "{{master}} Delete"
+      ,"EXEC_CADD"  : "{{detail}} Insert"
+      ,"EXEC_CUDT"  : "{{detail}} Update"
+      ,"EXEC_CDEL"  : "{{detail}} Delete"
+      ,"SRCH_MDAT"  : "{{master}} Search"
+      ,"SRCH_CDAT"  : "{{detail}} Search"
+    }
+    ,
+    "field" : {
+       "CREATED_BY"      : "Writer"
+      ,"CREATION_DATE"   : "Creation Date"
+      ,"LAST_UPDATED_BY" : "Editer"
+      ,"LAST_UPDATE_DATE": "Edit Date"
+      ,"USER"            : "User"
+    }
+  }
+  ,
+  "asset" : {
+    "app" : {
+       "TITLE" : "Asset Management"
+      ,"MENU"  : "Asset Management"
+      ,"DESC"  : "About Asset Management"
+      ,"HELP"  : "Help for Asset Management"
+    }
+  }
+  ,
+  "mobile" : {
+    "app" : {
+       "TITLE" : "Mobile Asset"
+      ,"MENU"  : "Mobile Asset"
+      ,"DESC"  : "About Mobile Asset"
+      ,"HELP"  : "Help for Mobile Asset"
+    }
+  }
+  ,
+  "asset_user" : {
+    "field" : {
+       "USER_ID"              : "User Id"
+      ,"USER_NAME"            : "User Name"
+      ,"USER_PWD"             : "User Pwd"
+      ,"USER_ROLE"            : "User Role"
+      ,"PHONE"                : "Phone"
+      ,"EMAIL"                : "Email"
+      ,"LANG"                 : "Lang"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset User"
+      ,"MENU"  : "Asset User"
+      ,"DESC"  : "About Asset User"
+      ,"HELP"  : "Help for Asset User"
+    }
+  }
+  ,
+  "common_code" : {
+    "field" : {
+       "CODE_TYPE"            : "Code Type"
+      ,"DISPLAY_SEQ"          : "Display Seq"
+      ,"LANG"                 : "Lang"
+      ,"CODE"                 : "Code"
+      ,"CODE_DESC"            : "Code Desc"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Common Code"
+      ,"MENU"  : "Common Code"
+      ,"DESC"  : "About Common Code"
+      ,"HELP"  : "Help for Common Code"
+    }
+  }
+  ,
+  "language" : {
+    "field" : {
+       "LANG"                 : "Lang"
+      ,"LANG_NAME"            : "Lang Name"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Language"
+      ,"MENU"  : "Language"
+      ,"DESC"  : "About Language"
+      ,"HELP"  : "Help for Language"
+    }
+  }
+  ,
+  "asset_category" : {
+    "field" : {
+       "ASSET_CAT_CODE"       : "Asset Cat Code"
+      ,"ASSET_CAT_NAME"       : "Asset Cat Name"
+      ,"ASSET_CAT_NAME_LOCAL" : "Asset Cat Name Local"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Category"
+      ,"MENU"  : "Asset Category"
+      ,"DESC"  : "About Asset Category"
+      ,"HELP"  : "Help for Asset Category"
+    }
+  }
+  ,
+  "cost_center" : {
+    "field" : {
+       "COST_CENTER_CODE"     : "Cost Center Code"
+      ,"COST_CENTER_NAME"     : "Cost Center Name"
+      ,"COST_CENTER_NAME_LOCAL" : "Cost Center Name Local"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Cost Center"
+      ,"MENU"  : "Cost Center"
+      ,"DESC"  : "About Cost Center"
+      ,"HELP"  : "Help for Cost Center"
+    }
+  }
+  ,
+  "installation_area" : {
+    "field" : {
+       "INSTALL_AREA_CODE"    : "Install Area Code"
+      ,"INSTALL_AREA_NAME"    : "Install Area Name"
+      ,"INSTALL_AREA_NAME_LOCAL" : "Install Area Name Local"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Installation Area"
+      ,"MENU"  : "Installation Area"
+      ,"DESC"  : "About Installation Area"
+      ,"HELP"  : "Help for Installation Area"
+    }
+  }
+  ,
+  "calibration_range" : {
+    "field" : {
+       "CALIBRATION_CODE"     : "Calibration Code"
+      ,"CALIBRATION_VALUE"    : "Calibration Value"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Calibration Range"
+      ,"MENU"  : "Calibration Range"
+      ,"DESC"  : "About Calibration Range"
+      ,"HELP"  : "Help for Calibration Range"
+    }
+  }
+  ,
+  "asset_common_part" : {
+    "field" : {
+       "PART_NO"              : "Part No"
+      ,"PART_NAME"            : "Part Name"
+      ,"PART_NAME_LOCAL"      : "Part Name Local"
+      ,"PART_SPEC"            : "Part Spec"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Common Part"
+      ,"MENU"  : "Asset Common Part"
+      ,"DESC"  : "About Asset Common Part"
+      ,"HELP"  : "Help for Asset Common Part"
+    }
+  }
+  ,
+  "asset_master" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"ASSET_NAME"           : "Asset Name"
+      ,"ASSET_NAME_LOCAL"     : "Asset Name Local"
+      ,"ASSET_CAT_CODE"       : "Asset Cat Code"
+      ,"COST_CENTER_CODE"     : "Cost Center Code"
+      ,"MAIN_MGR_NO"          : "Main Mgr No"
+      ,"SUB_MGR_NO"           : "Sub Mgr No"
+      ,"ASSET_MODEL_NAME"     : "Asset Model Name"
+      ,"MANUFACTURER_NAME"    : "Manufacturer Name"
+      ,"PURCHASER_NAME"       : "Purchaser Name"
+      ,"ACQUISITION_DATE"     : "Acquisition Date"
+      ,"DEPRECIATION_A"       : "Depreciation A"
+      ,"DEPRECIATION_B"       : "Depreciation B"
+      ,"SALVAGE_AMOUNT"       : "Salvage Amount"
+      ,"MANUFACTURE_NO"       : "Manufacture No"
+      ,"MANUFACTURE_DATE"     : "Manufacture Date"
+      ,"EXTERNAL_APPERANCE"   : "External Apperance"
+      ,"GROSS_WEIGHT"         : "Gross Weight"
+      ,"INSPECTION_FLAG"      : "Inspection Flag"
+      ,"INSPECTION_PERIOD"    : "Inspection Period"
+      ,"INSPECTION_UNIT"      : "Inspection Unit"
+      ,"ACQUISITION_AMOUNT"   : "Acquisition Amount"
+      ,"INSTALL_AREA_CODE"    : "Install Area Code"
+      ,"FILE_KEY"             : "File Key"
+      ,"FINAL_MOVE_SEQ"       : "Final Move Seq"
+      ,"FINAL_DISUSE_SEQ"     : "Final Disuse Seq"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Master"
+      ,"MENU"  : "Asset Master"
+      ,"DESC"  : "About Asset Master"
+      ,"HELP"  : "Help for Asset Master"
+    }
+  }
+  ,
+  "asset_part" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"ASSET_PART_SEQ"       : "Asset Part Seq"
+      ,"PART_NO"              : "Part No"
+      ,"PART_NAME"            : "Part Name"
+      ,"PART_NAME_LOCAL"      : "Part Name Local"
+      ,"PART_SPEC"            : "Part Spec"
+      ,"QUANTITY"             : "Quantity"
+      ,"UNIT_PRICE"           : "Unit Price"
+      ,"FILE_KEY"             : "File Key"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Part"
+      ,"MENU"  : "Asset Part"
+      ,"DESC"  : "About Asset Part"
+      ,"HELP"  : "Help for Asset Part"
+    }
+  }
+  ,
+  "asset_request" : {
+    "field" : {
+       "REQUEST_SEQ"          : "Request Seq"
+      ,"ASSET_CODE"           : "Asset Code"
+      ,"REQUEST_FLAG"         : "Request Flag"
+      ,"REQUEST_DATE"         : "Request Date"
+      ,"REQUEST_CHARGER"      : "Request Charger"
+      ,"REQ_SUBJECT"          : "Req Subject"
+      ,"REQUEST_DESC"         : "Request Desc"
+      ,"FILE_KEY"             : "File Key"
+      ,"PROCESS_FLAG"         : "Process Flag"
+      ,"PROCESS_DATE"         : "Process Date"
+      ,"PROCESS_CHARGER"      : "Process Charger"
+      ,"PROCESS_DESC"         : "Process Desc"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Request"
+      ,"MENU"  : "Asset Request"
+      ,"DESC"  : "About Asset Request"
+      ,"HELP"  : "Help for Asset Request"
+    }
+  }
+  ,
+  "asset_move" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"MOVE_SEQ"             : "Move Seq"
+      ,"INSTALL_AREA_CODE"    : "Install Area Code"
+      ,"MOVE_FLAG"            : "Move Flag"
+      ,"MOVE_DATE"            : "Move Date"
+      ,"MOVE_REASON"          : "Move Reason"
+      ,"REQEST_CHARGER"       : "Reqest Charger"
+      ,"PROCESS_CHARGER"      : "Process Charger"
+      ,"FILE_KEY"             : "File Key"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Move"
+      ,"MENU"  : "Asset Move"
+      ,"DESC"  : "About Asset Move"
+      ,"HELP"  : "Help for Asset Move"
+    }
+  }
+  ,
+  "asset_disuse" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"DISUSE_SEQ"           : "Disuse Seq"
+      ,"DISUSE_DATE"          : "Disuse Date"
+      ,"DISUSE_REASON"        : "Disuse Reason"
+      ,"DISUSE_DESC"          : "Disuse Desc"
+      ,"DISUSE_CHARGER"       : "Disuse Charger"
+      ,"FILE_KEY"             : "File Key"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Disuse"
+      ,"MENU"  : "Asset Disuse"
+      ,"DESC"  : "About Asset Disuse"
+      ,"HELP"  : "Help for Asset Disuse"
+    }
+  }
+  ,
+  "asset_capa" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"CAPA_SEQ"             : "Capa Seq"
+      ,"NAME"                 : "Name"
+      ,"NAME_LOCAL"           : "Name Local"
+      ,"DESCRIPTION"          : "Description"
+      ,"FILE_KEY"             : "File Key"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Capa"
+      ,"MENU"  : "Asset Capa"
+      ,"DESC"  : "About Asset Capa"
+      ,"HELP"  : "Help for Asset Capa"
+    }
+  }
+  ,
+  "asset_ex_repair" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"EX_RE_SEQ"            : "Ex Re Seq"
+      ,"ASSET_PART_SEQ"       : "Asset Part Seq"
+      ,"REQUEST_SEQ"          : "Request Seq"
+      ,"EX_RE_REQ_FLAG"       : "Ex Re Req Flag"
+      ,"EX_RE_PART_NAME"      : "Ex Re Part Name"
+      ,"EX_RE_PART_DESC"      : "Ex Re Part Desc"
+      ,"REQ_SUBJECT"          : "Req Subject"
+      ,"EX_RE_REQUESTER"      : "Ex Re Requester"
+      ,"EX_RE_REQ_DATE"       : "Ex Re Req Date"
+      ,"EX_RE_DATE"           : "Ex Re Date"
+      ,"EX_RE_DESC"           : "Ex Re Desc"
+      ,"EX_RE_PROC_FLAG"      : "Ex Re Proc Flag"
+      ,"EX_RE_COST"           : "Ex Re Cost"
+      ,"EX_RE_CHARGER"        : "Ex Re Charger"
+      ,"FILE_KEY"             : "File Key"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Ex Repair"
+      ,"MENU"  : "Asset Ex Repair"
+      ,"DESC"  : "About Asset Ex Repair"
+      ,"HELP"  : "Help for Asset Ex Repair"
+    }
+  }
+  ,
+  "asset_survey" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"SURVEY_SEQ"           : "Survey Seq"
+      ,"MOVE_SEQ"             : "Move Seq"
+      ,"SURVEY_DATE"          : "Survey Date"
+      ,"SURVEY_DESC"          : "Survey Desc"
+      ,"SURVEY_RESULT"        : "Survey Result"
+      ,"SURVEY_CHARGER"       : "Survey Charger"
+      ,"FILE_KEY"             : "File Key"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Survey"
+      ,"MENU"  : "Asset Survey"
+      ,"DESC"  : "About Asset Survey"
+      ,"HELP"  : "Help for Asset Survey"
+    }
+  }
+  ,
+  "asset_calibration" : {
+    "field" : {
+       "ASSET_CODE"           : "Asset Code"
+      ,"CALIBRATION_SEQ"      : "Calibration Seq"
+      ,"CALIBRATION_DATE"     : "Calibration Date"
+      ,"CALIBRATION_CODE"     : "Calibration Code"
+      ,"CALIBRATION_CHARGER"  : "Calibration Charger"
+      ,"CALIBRATION_RESULT"   : "Calibration Result"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Asset Calibration"
+      ,"MENU"  : "Asset Calibration"
+      ,"DESC"  : "About Asset Calibration"
+      ,"HELP"  : "Help for Asset Calibration"
+    }
+  }
+  ,
+  "attachment_file" : {
+    "field" : {
+       "ATTACH_FILE_SEQ"      : "Attach File Seq"
+      ,"FILE_KEY"             : "File Key"
+      ,"FILE_NAME"            : "File Name"
+      ,"FILE_EXT"             : "File Ext"
+      ,"FILE_PATH"            : "File Path"
+      ,"FILE_SIZE"            : "File Size"
+      ,"FILE_FLAG"            : "File Flag"
+      ,"STATUS"               : "Status"
+      ,"REMARKS"              : "Remarks"
+    }
+    ,
+    "app" : {
+       "TITLE" : "Attachment File"
+      ,"MENU"  : "Attachment File"
+      ,"DESC"  : "About Attachment File"
+      ,"HELP"  : "Help for Attachment File"
+    }
+  }
+
+
+
+  ,
+  "dashboard": {
+    "WELCOME": "Welcome to {{appName}}"
+  },
+  "topbar": {
+    "messages": {
+    	"MAIN": "Messages",
+      	"HEADER": "Unread messages",
+      	"SEEALL": "See All"
+    },
+    
+    "activities": {
+      "MAIN": "Activities",
+      "HEADER": "You have new notifications",
+      "SEEALL": "See All"
+    },
+    "user": {
+      "PROFILE": "My Profile",
+      "CALENDAR" : "My Calendar",
+      "MESSAGES" : "My Messages",
+      "LOCKSCREEN" : "Lock Screen",
+      "LOGOUT" : "Log Out"
+    }
+  },
+  "offsidebar": {
+    "chat": {
+      "ONLINE": "On-Line",
+      "OFFLINE": "Off-Line",
+      "BACK": "Back",
+      "SEND" : "Send",
+      "PLACEHOLDER": "Message"
+    },
+    "favorites": {
+      "MAIN": "Favorites"
+    },
+    "settings": {
+      "MAIN": "General Settings",
+      "NOTIFICATIONS": "Enable Notifications",
+      "SHOWEMAIL": "Show your E-mail",
+      "SHOWUSERS": "Show Offline Users",
+      "EMAILALERT": "E-mail Alerts",
+      "SMSALERT": "SMS Alerts",
+      "SAVE" : "Save Changes"     
+    }  
+  },
+  "sidebar": {
+    "heading": {
+      "NAVIGATION": "Main Navigation",
+      "FEATURES": "Core Features",
+      "DOCUMENTATION": "Documentation" 
+    },
+    "search": {
+      "PLACEHOLDER": "Search..."
+    },
+    "nav": {
+      "dashboard": {
+      	"MAIN": "Dashboard",
+        "ASSET_MAIN": "Dashboard(New)"
+      },
+      "common": {
+        "MAIN": "Common Information",
+        "INSTALLAREA": "Installation Area",
+        "COSTCENTER": "Cost Center",
+        "PARTS": "Parts",
+        "CODE" : "Common Code"
+      },
+      "asset": {
+        "MAIN": "R&amp;D Asset",
+        "ASSETMASTER": "Asset Master",
+        "ASSETMASTER2": "자산 Master(hgjang)",
+        "ASSETPART": "Asset Part",
+        "ASSETREPAIR": "Asset Repair",
+        "ASSETCAPA" : "Asset Capacity",
+        "ASSETVALUE" : "Asset Value",
+        "ASSETMOVE" : "Asset Move",
+        "ASSETSURVEY" : "Asset Survey",
+        "ASSETDISUSE" : "Asset Disuse"
+      },
+      "barcode": {
+        "PRINT": "Barcode Print"
+      },
+      "mobile": {
+        "ASSET": "Mobile Asset"
+      },
+
+
+
+      "mobile_asset": {
+        "ASSET_LIST": "Asset List",
+        "ASSET_MOVE": "Asset Move"
+      },
+
+
+
+      "interface": {
+        "ASSET": "Asset Interface"
+      },
+      "element": {
+      	"MAIN": "UI Elements",
+        "ELEMENTS": "Elements",
+        "BUTTONS": "Buttons",
+        "LINKS": "Link Effects",
+        "FONTAWESOME" : "Font Awesome Icons",
+        "LINEARICONS" : "Linear Icons",
+        "MODALS" : "Modals",
+        "TOGGLE" : "Toggle",
+        "TABS" : "Tabs & Accordions",
+        "PANELS" : "Panels",
+        "NOTIFICATIONS": "Notifications",
+        "SLIDERS": "Sliders",
+        "TREEVIEW": "TreeView",
+        "MEDIA": "Media",
+        "NESTABLE": "Nestable List",
+        "TYPOGRAPHY": "Typography"
+      },
+      "tables": {
+        "MAIN": "Tables",
+        "BASIC": "Basic Tables",
+        "RESPONSIVE": "Responsive Tables",
+        "DYNAMIC": "Dynamic Tables",
+        "DATA": "ngTable"
+      },
+      "forms": {
+        "MAIN": "Forms",
+        "ELEMENTS": "Form Elements",
+        "XEDITABLE": "X-Editable Elements",
+        "TEXTEDITOR": "Text Editor",
+        "WIZARD": "Form Wizard",
+        "VALIDATION": "Form Validation",
+        "CROPPING": "Image Cropping",
+        "UPLOAD": "Multiple File Upload"
+      },
+      "login": {
+        "MAIN": "Login",
+        "LOGIN": "Login Form",
+        "LOGOUT": "Logout Form",
+        "REGISTRATION": "Registration Form",
+        "FORGOT": "Forgot Password Form",
+        "LOCKSCREEN": "Lock Screen"
+      },
+      "logout": {
+        "MAIN": "Logout"
+      },
+      "pages": {
+        "MAIN": "Pages",
+        "USERPROFILE": "User Profile",
+        "INVOICE": "Invoice",
+        "TIMELINE": "Timeline",
+        "CALENDAR": "Calendar",
+        "MESSAGES": "Messages",
+        "BLANKPAGE": "Starter Page"
+      },
+      "utilities": {
+        "MAIN": "Utilities",
+        "SEARCHRESULT": "Search Results",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500",
+        "PRICING": "Pricing Table"
+      },
+      "3level": {
+        "MAIN": "3 Level Menu",
+        "Item1": {
+        	"MAIN": "Item 1",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item2": {
+        	"MAIN": "Item 2",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        },
+        "Item3": {
+        	"MAIN": "Item 3",
+        	"LINK1" : "Sample Link 1",
+        	"LINK2" : "Sample Link 2",
+        	"LINK3" : "Sample Link 3"
+        }
+      },
+      "4level": {
+        "MAIN": "4 Level Menu",
+        "Item1": {
+        	"MAIN": "Item 1",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"         		
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"       		
+        	}        	
+        },
+        "Item2": {
+        	"MAIN": "Item 2",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"         		
+        	}        	
+        },
+        "Item3": {
+        	"MAIN": "Item 3",
+        	"link1" : {
+        		"MAIN": "Sample Link 1",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link2" : {
+        		"MAIN": "Sample Link 2",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	},
+        	"link3" : {
+        		"MAIN": "Sample Link 3",
+        		"LINK1" : "Link 1",
+        		"LINK2" : "Link 2",
+        		"LINK3" : "Link 3"        		
+        	}        	
+        }
+      },
+      "maps": {
+        "MAIN": "Maps"
+      },
+      "charts": {
+        "MAIN": "Charts"
+      }
+    }
+  },
+  "footer": {
+    "copyright": {
+    	"MAIN": "Copyright",
+      	"MESSAGE": "All rights reserved"
+    }
+  },
+  "setting": {
+  	"MAIN" : "Style Selector",
+    "FIXEDHEADER": "Fixed header",
+    "FIXEDSIDEBAR": "Fixed sidebar",
+    "CLOSEDSIDEBAR": "Closed sidebar",
+    "FIXEDFOOTER": "Fixed footer"
+  }
+}
